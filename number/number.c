@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <limits.h>
 #include "header.h"
 
 void init(List *l){
@@ -10,7 +8,29 @@ void init(List *l){
     return;
 }
 
-void insertAtBeginning(List *l, unsigned int data){
+void append(List *l, short data){
+    Node * nn = (Node *) malloc(sizeof(Node));
+
+    if (!nn) return;
+
+    nn->data = data;
+    nn->next = NULL;
+    nn->previous = NULL;
+
+    if (!l->front) {
+        l->front = nn;
+        l->rear = nn;
+    }
+    else {
+        nn->previous = l->rear;
+        l->rear->next = nn;
+        l->rear = nn;
+    }
+
+    return;
+}
+
+void insertAtBeginning(List *l, short data){
     Node * nn = (Node *) malloc(sizeof(Node));
 
     if (!nn) return;
@@ -32,10 +52,10 @@ void insertAtBeginning(List *l, unsigned int data){
     return;
 }
 
-void display(List l){
-    if (!l.front) return;
+void display(Number num){
+    if (!num->front) return;
 
-    Node * p = l.front;
+    Node * p = num->front;
     while (p)
     {
         printf("%d", p->data);
@@ -44,4 +64,17 @@ void display(List l){
     return;  
 }
 
-Number toNumber(char * str);
+Number toNumber(char * str){
+    int i = 0;
+    char c;
+
+    List * l = (List *)malloc(sizeof(List));
+
+    while ((c = *(str+i)) != '\0')
+    {
+        append(l, c - '0');
+        i++;
+    }
+    
+    return l;
+}
