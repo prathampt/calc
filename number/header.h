@@ -18,8 +18,11 @@ void init(List *l);
 
 void append(List *l, short data);
 void insertAtBeginning(List *l, short data);
+int removeBeginning(List *l);
 
 void display(Number num);
+short len(Number num);
+short greater(Number num1, Number num2); // this will return 1 if first number is greater than second number or 0 otherwise...
 
 Number toNumber(char * str);
 
