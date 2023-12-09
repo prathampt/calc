@@ -1,15 +1,15 @@
-typedef struct node{
+typedef struct SLL_node{
     char data;
-    struct node * next, * previous;
-}Node;
+    struct SLL_node * next;
+}SLL_Node;
 
 typedef struct stack{
-    Node *base, *top;
+    SLL_Node *top;
 }Stack;
 
-void init(Stack *s);
+void SLL_init(Stack *s);
 int isEmpty(Stack s);
 void push(Stack *s, char data);
 char pop(Stack *s);
 char peek(Stack s);
-void display(Stack s);
+void SLL_display(Stack s);

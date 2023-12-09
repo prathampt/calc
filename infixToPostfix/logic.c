@@ -1,4 +1,5 @@
-#include "characterStackUsingDLL.c"
+#include "characterStackUsingSLL.c"
+
 #include <ctype.h>
 
 int operatorPrecedence(char c){
@@ -33,7 +34,7 @@ int isOperator(char c){
 
 char * infixToPostfix(char * str, int n){
     Stack s;
-    init(&s);
+    SLL_init(&s);
 
     int i = 0, j = 0;
     char c;
@@ -44,7 +45,15 @@ char * infixToPostfix(char * str, int n){
             i++;
             continue;
         }
-
+        if (c=='.')
+        {
+            while (!isOperator(str[i]))
+            {
+                i++;
+            }
+            
+        }
+        
         if (c == '('){
             push(&s, c);
             i++;
