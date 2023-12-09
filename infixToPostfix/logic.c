@@ -45,13 +45,14 @@ char * infixToPostfix(char * str, int n){
             i++;
             continue;
         }
-        if (c=='.')
+
+        if (c == '.')
         {
             while (!isOperator(str[i]))
             {
                 i++;
             }
-            
+            continue;            
         }
         
         if (c == '('){
@@ -88,6 +89,7 @@ char * infixToPostfix(char * str, int n){
 
     while (!isEmpty(s)){
         answer[j++] = pop(&s);
+        answer[j++] = ' ';
     }    
        
     return answer;
