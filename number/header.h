@@ -10,6 +10,10 @@ typedef struct list {
 
 typedef List * Number;
 
+/*
+    Implementing Number as an abstract data type...
+*/
+
 void init(List *l);
 
 void append(List *l, short data);
@@ -18,3 +22,17 @@ void insertAtBeginning(List *l, short data);
 void display(Number num);
 
 Number toNumber(char * str);
+
+/*
+    Arithmatic Functions on Numbers...
+*/
+
+Number add(Number num1, Number num2);
+Number subtract(Number num1, Number num2);
+Number multiply(Number num1, Number num2);
+Number divide(Number num1, Number num2);
+
+Number justAdd(Number num1, Number num2, short isNegative);
+Number justSubtract(Number num1, Number num2);
+Number justMultiply(Number num1, Number num2, short isNegative);
+Number justDivide(Number num1, Number num2, short isNegative);
