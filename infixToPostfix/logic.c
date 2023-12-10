@@ -44,8 +44,6 @@ char *infixToPostfix(char *str, int n)
     int i = 0, j = 0;
     char c;
     char *answer = (char *)malloc(n * sizeof(char));
-    // if (!answer)
-    //     return NULL;
 
     while ((c = str[i]) != '\0')
     {
