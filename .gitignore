@@ -52,5 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Ignore VS code files
-
 .vscode
+
+#Ignoring .txt files
+*.txt
