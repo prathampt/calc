@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <string.h>
 #include "header.h"
 
 void init(List *l){
@@ -10,7 +11,7 @@ void init(List *l){
     return;
 }
 
-void append(List *l, short data){
+void append(List *l, unsigned long long int data){
     Node * nn = (Node *) malloc(sizeof(Node));
 
     if (!nn) return;
@@ -32,7 +33,7 @@ void append(List *l, short data){
     return;
 }
 
-void insertAtBeginning(List *l, short data){
+void insertAtBeginning(List *l, unsigned long long int data){
     Node * nn = (Node *) malloc(sizeof(Node));
 
     if (!nn) return;
@@ -78,9 +79,13 @@ void display(Number num){
     if (num->isNegative) printf("-"); // Will print a negative sign if the number is negative... 
 
     Node * p = num->front;
+
+    printf("%lld", p->data); // This code will print only the first node as it is...
+    p = p->next;
+
     while (p)
     {
-        printf("%d", p->data);
+        printf("%010lld", p->data); // All the rest nodes will be printed formatted...
         p = p->next;
     }
     return;  
@@ -126,6 +131,7 @@ short greater(Number num1, Number num2){
 Number toNumber(char * str){
     int i = 0;
     char c;
+    int len = strlen(str);
 
     List * l = (List *)malloc(sizeof(List));
 
@@ -133,17 +139,29 @@ Number toNumber(char * str){
 
     if ((c = *(str+i)) == '-'){
         l->isNegative = 1;
+        *(str+i) = '\0';
         i++;
     }
 
     while ((c = *(str+i)) == ' '){
+        *(str+i) = '\0';
         i++; // If the string contains spaces it will handle the spaces...
     }
 
-    while ((c = *(str+i)) != '\0')
+    i = len - 1; // Now traversing in reverse direction...
+
+    while (c != '\0' && i != -1)
     {
-        append(l, c - '0');
-        i++;
+        char a[11] = "0000000000"; // This will ensure that even if the loop break earlier, the correct number is read...
+        for (int j = 9; j > 0 && c != '\0' && i != -1; j--)
+        {
+            c = *(str+i);
+            i--;
+            a[j] = c;
+        }
+
+        a[10] = '\0';
+        insertAtBeginning(l, (unsigned long long int) atoll(a));
     }
     
     return l;
@@ -197,9 +215,9 @@ Number justAdd(Number num1, Number num2, short isNegative){
 
     while (p && q)
     {   
-        short t = p->data + q->data + carry;
-        insertAtBeginning(l, t % 10);
-        carry = t / 10;
+        unsigned long long int t = p->data + q->data + carry;
+        insertAtBeginning(l, t % INT_MAX);
+        carry = t / INT_MAX;
         p = p->previous;
         q = q->previous;
     }
@@ -226,7 +244,7 @@ Number justAdd(Number num1, Number num2, short isNegative){
 }
 
 Number justSubtract(Number num1, Number num2){
-    short borrow = 0;
+    int borrow = 0;
     Node *p, *q;
     
     List *l = (List *)malloc(sizeof(List));
@@ -245,8 +263,8 @@ Number justSubtract(Number num1, Number num2){
 
     while (p && q)
     {   
-        short t = p->data - q->data - borrow;
-        insertAtBeginning(l, (t + 10) % 10 );
+        long long int t = (long long int) p->data - q->data - borrow; // work needed to be done.......
+        insertAtBeginning(l, (unsigned long long int) ((t + LLONG_MAX) % LLONG_MAX - 1) % INT_MAX );
         if (t < 0){
             borrow = 1;
         }

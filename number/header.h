@@ -1,5 +1,5 @@
 typedef struct node {
-    short data; // Using short int to decrease the memory usuage...
+    unsigned long long int data; // Changing the implementation of the data storage...
     struct node *next, *previous;
 } Node;
 
@@ -16,8 +16,8 @@ typedef List * Number;
 
 void init(List *l);
 
-void append(List *l, short data);
-void insertAtBeginning(List *l, short data);
+void append(List *l, unsigned long long int data);
+void insertAtBeginning(List *l, unsigned long long int data);
 int removeBeginning(List *l);
 
 void display(Number num);
