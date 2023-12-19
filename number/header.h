@@ -3,6 +3,8 @@ typedef struct node {
     struct node *next, *previous;
 } Node;
 
+// In this branch we will be implementing the numbers using SLL...
+
 typedef struct list {
     short isNegative; // This will only take values 1 (if the number is negative) and 0 (otherwise)...
     Node * front, * rear;
