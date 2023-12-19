@@ -216,23 +216,23 @@ Number justAdd(Number num1, Number num2, short isNegative){
     while (p && q)
     {   
         unsigned long long int t = p->data + q->data + carry;
-        insertAtBeginning(l, t % INT_MAX);
-        carry = t / INT_MAX;
+        insertAtBeginning(l, t % 1000000000);
+        carry = t / 1000000000;
         p = p->previous;
         q = q->previous;
     }
 
     while (p)
     {
-        insertAtBeginning(l, p->data + carry);
-        carry = 0;
+        insertAtBeginning(l, (p->data + carry)%1000000000);
+        carry = (p->data + carry)/1000000000;
         p = p->previous;
     }
 
     while (q)
     {
-        insertAtBeginning(l, q->data + carry);
-        carry = 0;
+        insertAtBeginning(l, (q->data + carry)%1000000000);
+        carry = (q->data + carry)/1000000000;
         q = q->previous;
     }
 
@@ -264,7 +264,7 @@ Number justSubtract(Number num1, Number num2){
     while (p && q)
     {   
         long long int t = (long long int) p->data - q->data - borrow; // work needed to be done.......
-        insertAtBeginning(l, (unsigned long long int) ((t + LLONG_MAX) % LLONG_MAX - 1) % INT_MAX );
+        insertAtBeginning(l, (unsigned long long int) ((t + LLONG_MAX) % LLONG_MAX - 1) % 1000000000 );
         if (t < 0){
             borrow = 1;
         }
