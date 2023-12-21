@@ -1,10 +1,14 @@
+
 typedef struct node
 {
     int data;
     struct node * next;
 }Node;
-
 typedef Node * List;
+typedef struct number{
+    List head;// what i need to do is simply just store the where head will point to lsb
+    short isNegative;
+}Number;
 
 void init(List *l);
 void display(List l);
@@ -22,3 +26,8 @@ int isPalindrome(List l);
 void removeDuplicates(List *l);
 void destroy(List *l);
 void removeAndInsert(List *l, Node *n, int index);
+
+
+void init_Number(Number* num);
+Number *toNumber(char * str);
+void displayNum(Number num);
