@@ -2,13 +2,15 @@
 #include <stdlib.h>
 #include "header.h"
 
-void init(List *l){
+void init(List *l)
+{
     *l = NULL;
     return;
 }
 
-void display(List l){
-    printf("Linked list:   ");
+void display(List l)
+{
+    printf("Linked List:   ");
 
     while (l)
     {
@@ -18,13 +20,14 @@ void display(List l){
     printf("\b\b   \n");
 
     return;
-    
 }
 
-void append(List *l, int data){
-    Node * newNode = (Node *) malloc(sizeof(Node));
+void append(List *l, int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
 
-    if (!newNode) return;
+    if (!newNode)
+        return;
 
     newNode->data = data;
     newNode->next = NULL;
@@ -46,23 +49,27 @@ void append(List *l, int data){
     return;
 }
 
-void insertAtBeginning(List *l, int data){
-    Node * newNode = (Node *) malloc(sizeof(Node));
+void insertAtBeginning(List *l, int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
 
-    if (!newNode) return;
+    if (!newNode)
+        return;
 
     newNode->data = data;
     newNode->next = *l;
-    
+
     *l = newNode;
     return;
 }
 
-int removeEnd(List *l){
+int removeEnd(List *l)
+{
     Node *p, *q;
     int removedElement;
 
-    if (!*l) return -1;
+    if (!*l)
+        return -1;
 
     p = *l;
 
@@ -78,16 +85,17 @@ int removeEnd(List *l){
     {
         p = p->next;
     }
-    
+
     q = p->next;
     p->next = NULL;
 
     removedElement = q->data;
     free(q);
-    return removedElement;    
+    return removedElement;
 }
 
-int removeBeginning(List *l){
+int removeBeginning(List *l)
+{
     Node *p;
     int removedElement;
 
@@ -100,11 +108,13 @@ int removeBeginning(List *l){
     return removedElement;
 }
 
-int removeNode(List *l, Node *n){
+int removeNode(List *l, Node *n)
+{
     Node *p, *q;
     int removedElement;
 
-    if (!*l) return -1;
+    if (!*l)
+        return -1;
 
     p = *l;
 
@@ -120,7 +130,7 @@ int removeNode(List *l, Node *n){
     {
         p = p->next;
     }
-    
+
     q = p->next;
     p->next = p->next->next;
 
@@ -129,13 +139,15 @@ int removeNode(List *l, Node *n){
     return removedElement;
 }
 
-void addNodeAtPosition(List *l, int data, int position){
+void addNodeAtPosition(List *l, int data, int position)
+{
     Node *newNode, *p;
     int i;
 
-    if (position < 0 || position > length(*l)) return;
+    if (position < 0 || position > length(*l))
+        return;
 
-    newNode = (Node*)malloc(sizeof(Node));
+    newNode = (Node *)malloc(sizeof(Node));
     newNode->data = data;
     newNode->next = NULL;
 
@@ -147,7 +159,7 @@ void addNodeAtPosition(List *l, int data, int position){
     else
     {
         p = *l;
-        for(i = 0; i < position - 1; i++)
+        for (i = 0; i < position - 1; i++)
         {
             p = p->next;
         }
@@ -157,11 +169,13 @@ void addNodeAtPosition(List *l, int data, int position){
     return;
 }
 
-int length(List l){
+int length(List l)
+{
     Node *p = l;
     int count = 0;
 
-    while(p){
+    while (p)
+    {
         count++;
         p = p->next;
     }
@@ -169,7 +183,8 @@ int length(List l){
     return count;
 }
 
-void deleteList(List *l){
+void deleteList(List *l)
+{
     Node *current = *l;
     Node *nextNode;
 
@@ -179,14 +194,16 @@ void deleteList(List *l){
         free(current);
         current = nextNode;
     }
-    
+
     *l = NULL;
 }
 
-void swapNodes(List * l, Node * n1, Node * n2){
-    if (n1 == n2 || !n1 || !n2 || !(*l)) return;
+void swapNodes(List *l, Node *n1, Node *n2)
+{
+    if (n1 == n2 || !n1 || !n2 || !(*l))
+        return;
 
-    List * master = l;
+    List *master = l;
 
     while ((*master) != n1)
     {
@@ -204,41 +221,48 @@ void swapNodes(List * l, Node * n1, Node * n2){
 
     (*master) = n1;
 
-    Node * temp = n1->next;
+    Node *temp = n1->next;
     n1->next = n2->next;
     n2->next = temp;
 
-    return;    
+    return;
 }
 
-void fill(List *l, int number){
-    if (number < 1) return;
+void fill(List *l, int number)
+{
+    if (number < 1)
+        return;
 
     for (int i = 0; i < number; i++)
     {
         append(l, rand() % 100 + 1);
     }
 
-    return;    
+    return;
 }
 
-void reverseEven(List *l){
-    if (length(*l) - 2 < 0) return;
+void reverseEven(List *l)
+{
+    if (length(*l) - 2 < 0)
+        return;
 
-    Node * p = *l, *q, *r, *s;
+    Node *p = *l, *q, *r, *s;
 
     while (p->next)
     {
         q = r = s = NULL;
-        if (p->data % 2 == 0){
+        if (p->data % 2 == 0)
+        {
             q = p;
             r = p;
         }
-        else if (p->next->data % 2 == 1){
+        else if (p->next->data % 2 == 1)
+        {
             p = p->next;
             continue;
         }
-        else {
+        else
+        {
             q = p->next;
             r = q;
         }
@@ -248,16 +272,20 @@ void reverseEven(List *l){
             r = r->next;
         }
 
-        if (q == r){
+        if (q == r)
+        {
             p = r->next;
             continue;
         }
-        else s = q->next;
+        else
+            s = q->next;
 
-        if (q == p){
+        if (q == p)
+        {
             *l = r;
         }
-        else {
+        else
+        {
             p->next = r;
         }
 
@@ -273,23 +301,24 @@ void reverseEven(List *l){
             q = s;
             s = s->next;
         }
-        
-        p = q;       
+
+        p = q;
     }
 
     return;
-    
 }
 
-int isPalindrome(List l){
+int isPalindrome(List l)
+{
     int len = length(l);
     int halfLength = len / 2;
 
-    if (len - 2 < 0) return 1;
+    if (len - 2 < 0)
+        return 1;
 
-    int * arr = (int *) malloc(halfLength * sizeof(int));
+    int *arr = (int *)malloc(halfLength * sizeof(int));
 
-    Node * p = l;
+    Node *p = l;
 
     for (int i = 0; i < halfLength; i++)
     {
@@ -297,27 +326,31 @@ int isPalindrome(List l){
         p = p->next;
     }
 
-    if (len % 2 == 1) p = p->next;
+    if (len % 2 == 1)
+        p = p->next;
 
     for (int i = halfLength - 1; i >= 0; i--)
     {
-        if (arr[i] != p->data) return 0;
+        if (arr[i] != p->data)
+            return 0;
         p = p->next;
     }
-    
-    return 1; 
+
+    return 1;
 }
 
-void removeDuplicates(List *l){
+void removeDuplicates(List *l)
+{
     int len = length(*l);
 
-    int * arr = (int *) calloc(len, sizeof(int));
+    int *arr = (int *)calloc(len, sizeof(int));
 
-    if (!arr) return;
+    if (!arr)
+        return;
 
     int count = 0;
 
-    Node * p = *l;
+    Node *p = *l;
 
     arr[count++] = p->data;
 
@@ -328,7 +361,8 @@ void removeDuplicates(List *l){
 
         for (int i = 0; i < count; i++)
         {
-            if (arr[i] == data){
+            if (arr[i] == data)
+            {
                 dublicate = 1;
                 break;
             }
@@ -336,20 +370,22 @@ void removeDuplicates(List *l){
 
         if (dublicate)
         {
-            Node * q = p->next;
+            Node *q = p->next;
             p->next = p->next->next;
             free(q);
         }
-        else{
+        else
+        {
             arr[count++] = data;
             p = p->next;
         }
     }
-
 }
 
-void destroy(List *l){
-    if (!*l) return;
+void destroy(List *l)
+{
+    if (!*l)
+        return;
 
     while (*l)
     {
@@ -359,8 +395,10 @@ void destroy(List *l){
     return;
 }
 
-void removeAndInsert(List *l, Node *n, int index){
-    if (!*l) return;    
+void removeAndInsert(List *l, Node *n, int index)
+{
+    if (!*l)
+        return;
 
     Node *p = *l;
 
@@ -375,9 +413,9 @@ void removeAndInsert(List *l, Node *n, int index){
     {
         n->next = *l;
         *l = n;
-        return; 
+        return;
     }
-    
+
     Node *q = *l;
 
     for (int i = 0; i < index - 1; i++)
@@ -389,5 +427,21 @@ void removeAndInsert(List *l, Node *n, int index){
     q->next = n;
 
     return;
-    
+}
+List reverse(List head)
+{
+    Node *prev = NULL;
+    Node *current = head;
+    Node *nextNode;
+
+    while (current != NULL)
+    {
+        nextNode = current->next;
+        current->next = prev;
+        prev = current;
+        current = nextNode;
+    }
+
+    // The new head of the reversed List is the previous node
+    return prev;
 }
