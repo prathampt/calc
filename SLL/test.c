@@ -5,8 +5,11 @@
 
 int main(int argc, char const *argv[])
 {
-    char* str="1234234567754323456788654345678653456789";
-    Number* num=toNumber(str);
-    displayNum(*num);
+    char* str="-12343543234";
+    char* str1="12322321";
+    
+    Number* num1=toNumber(str);
+    // displayNum(*num);
+    displayNum(*num1);
     return 0;
 }

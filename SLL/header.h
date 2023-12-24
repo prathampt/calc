@@ -31,3 +31,5 @@ void removeAndInsert(List *l, Node *n, int index);
 void init_Number(Number* num);
 Number *toNumber(char * str);
 void displayNum(Number num);
+Number Add(Number num1, Number num2);
+Number Sub(Number num1, Number num2);
