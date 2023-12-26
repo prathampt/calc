@@ -1,5 +1,6 @@
 #include "logic.c"
 #include <string.h>
+#define MAXNODEVAL 1000000000
 void init_Number(Number *num)
 {
     num->head = NULL;
@@ -24,21 +25,23 @@ Number *toNumber(char *str)
             nineLen[i - len + 9] = str[i];
             // str[i]='\0';//equating it with null character to reduce str's length //this gives seg fault i don't know why pls let me know
         }
-        int n = atoi(nineLen);
+        const int n = atoi(nineLen);
 
         append(&num->head, n);
         len = len - 9;
     }
-    char* finalStr=(char* )malloc(sizeof(char)*8);
-    int j=0;
+    char *finalStr = (char *)malloc(sizeof(char) * 8);
+    int j = 0;
     for (int i = 0; i < len; i++)
     {
-        if(num->isNegative && !i) i++;
+        if (num->isNegative && !i)
+            i++;
         finalStr[j] = str[i];
         j++;
     }
-    for(int i=len; i< 9;i++){
-        finalStr[i]='\0';
+    for (int i = len; i < 9; i++)
+    {
+        finalStr[i] = '\0';
     }
     int n = atoi(finalStr);
     append(&num->head, n);
@@ -51,22 +54,22 @@ void displayNum(Number num)
     {
         printf("-");
     }
-    printf("%d",revList->data);
-    revList=revList->next;
+    printf("%d", revList->data);
+    revList = revList->next;
     while (revList)
     {
         printf("%09d", revList->data);
         revList = revList->next;
     }
     printf("\n");
-    destroy(&revList);
+    
     return;
 }
 Number Add(Number num1, Number num2)
 {
     if (num1.isNegative ^ num2.isNegative) // if signs are different
     {
-        num2.isNegative = num1.isNegative; 
+        num2.isNegative = num1.isNegative;
         Number sub = Sub(num1, num2);
         return sub;
     }
@@ -83,8 +86,8 @@ Number Add(Number num1, Number num2)
     while (p && q)
     {
         sum = (p->data + q->data + carry);
-        carry = sum / 1000000000;
-        sum %= 1000000000;
+        carry = sum / MAXNODEVAL;
+        sum %= MAXNODEVAL;
         append(&ans->head, sum);
         p = p->next;
         q = q->next;
@@ -92,97 +95,99 @@ Number Add(Number num1, Number num2)
     while (p)
     {
         sum = p->data + carry;
-        carry = sum / 1000000000;
-        sum %= 1000000000;
+        carry = sum / MAXNODEVAL;
+        sum %= MAXNODEVAL;
         append(&ans->head, sum);
         p = p->next;
     }
     while (q)
     {
         sum = q->data + carry;
-        carry = sum / 1000000000;
-        sum %= 1000000000;
+        carry = sum / MAXNODEVAL;
+        sum %= MAXNODEVAL;
         append(&ans->head, sum);
         q = q->next;
     }
+    if (carry)
+        append(&ans->head, carry);
     return *ans;
 }
 
 Number Sub(Number num1, Number num2)
 {
+    // displayNum(num1);
     if (num1.isNegative ^ num2.isNegative)
     {
         num2.isNegative = num1.isNegative;
         Number add = Add(num1, num2);
         return add;
     }
-    Number* ans=(Number* )malloc(sizeof(Number));
-    if (absCompare(num1, num2)==0)
+    Number *ans = (Number *)malloc(sizeof(Number));
+    if (absCompare(num1, num2) == 0)
     {
-        append(&ans->head,0);
+        append(&ans->head, 0);
         return *ans;
     }
-    ans->isNegative=0;
-    //kon greater hai abs mai?
-    if(absCompare(num1, num2) == 1)//num2 > num1
+    ans->isNegative = 0;
+    int borrow = 0;
+    // kon greater hai abs mai?
+    if (absCompare(num1, num2) == 1) // num2 > num1
     {
-        int borrow = 0;
-        long long subNode;
-        Node* p=num1.head;
-        Node* q=num2.head;
-        while (p && q)
+        long long subNodeVal;
+        Node *small = num1.head;
+        Node *big = num2.head;
+        while (small && big)
         {
-            subNode=p->data-q->data;
-            subNode %= 1000000000;
-            append(&ans->head,subNode+borrow);
-            borrow /= 1000000000;
-            q=q->next;
-            p=p->next;
+            subNodeVal = big->data - small->data + borrow;
+            borrow = subNodeVal / MAXNODEVAL;
+            subNodeVal %= MAXNODEVAL;
+            append(&ans->head, subNodeVal + borrow);
+            big = big->next;
+            small = small->next;
         }
-        while (p)
+        while (big)
         {
-            subNode=p->data;
-            subNode %= 1000000000;
-            append(&ans->head,subNode+borrow);
-            borrow = subNode/1000000000;
-            p=p->next;
-        }  
-
+            subNodeVal = big->data + borrow;
+            subNodeVal %= MAXNODEVAL;
+            borrow = subNodeVal / MAXNODEVAL;
+            append(&ans->head, subNodeVal + borrow);
+            big = big->next;
+        }
         if (!num2.isNegative)
         {
-            ans->isNegative=1;
-        }        
+            ans->isNegative = 1;
+        }
     }
     else
     {
-        int borrow = 0;
-        long long subNode;
-        Node* p=num1.head;
-        Node* q=num2.head;
-        while (p && q)
+        long long subNodeVal;
+        Node *big = num1.head;
+        Node *small = num2.head;
+        while (small && big)
         {
-            subNode=q->data-p->data;
-            subNode %= 1000000000;
-            append(&ans->head,subNode+borrow);
-            borrow /= 1000000000;
-            q=q->next;
-            p=p->next;
+            subNodeVal = big->data - small->data + borrow;
+            subNodeVal %= MAXNODEVAL;
+            borrow = subNodeVal / MAXNODEVAL;
+            append(&ans->head, subNodeVal);
+            big = big->next;
+            small = small->next;
         }
-        while (q)
+        while (big)
         {
-            subNode=q->data;
-            subNode %= 1000000000;
-            append(&ans->head,subNode+borrow);
-            borrow = subNode/1000000000;
-            q=q->next;
-        } 
+            subNodeVal = big->data + borrow;
+            borrow = subNodeVal / MAXNODEVAL;
+            subNodeVal %= MAXNODEVAL;
+            append(&ans->head, subNodeVal + borrow);
+            big = big->next;
+        }
         if (num1.isNegative)
         {
-            ans->isNegative=1;
+            ans->isNegative = 1;
         }
-        return *ans;  
     }
-    
+    if (borrow)
+        append(&ans->head, borrow);
+    return *ans;
 }
 int absCompare(Number num1, Number num2) // 0 if equal, 1 if num2 is greater than num1 else -1
 {
@@ -208,4 +213,6 @@ int absCompare(Number num1, Number num2) // 0 if equal, 1 if num2 is greater tha
     }
     return 0;
 }
+
+
 
