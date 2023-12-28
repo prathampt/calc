@@ -1,4 +1,3 @@
-
 typedef struct node
 {
     int data;
@@ -34,4 +33,4 @@ void displayNum(Number num);
 Number Add(Number num1, Number num2);
 Number Sub(Number num1, Number num2);
 int absCompare(Number num1, Number num2); // 0 if equal, 1 if num2 is greater than num1 else -1
-
+Number mult(Number num1, Number num2);

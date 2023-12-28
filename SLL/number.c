@@ -62,7 +62,7 @@ void displayNum(Number num)
         revList = revList->next;
     }
     printf("\n");
-    
+
     return;
 }
 Number Add(Number num1, Number num2)
@@ -214,5 +214,55 @@ int absCompare(Number num1, Number num2) // 0 if equal, 1 if num2 is greater tha
     return 0;
 }
 
+Number mult(Number num1, Number num2)
+{
+    Node *ptr1 = num1.head, *ptr2 = num2.head;
+    Number *ans = (Number *)malloc(sizeof(Number));
+    init_Number(ans);
+    if(num1.isNegative^num2.isNegative) ans->isNegative=1;
+    int startPosAns = 0;
+    while (ptr2)
+    {
+        int carry = 0;
+        while (ptr1)
+        {
+            if (ans->head == NULL)
+            {
+                long long prod = (long long)ptr1->data*ptr2->data + carry;
+                int appendVal = prod % MAXNODEVAL;
+                carry = prod / MAXNODEVAL;
+                append(&ans->head, appendVal);
+            }
+            else
+            {
+                Node *ansPtr = ans->head;
+                for (int i = 0; i < startPosAns; i++)
+                {
+                    ansPtr = ansPtr->next;
+                }
+                long long prod = (long long)ptr1->data*ptr2->data + carry;
+                // printf("%d")
+                int appendVal = prod % MAXNODEVAL;
+                carry = prod / MAXNODEVAL;
 
+                if (ansPtr != NULL)
+                {
+                    prod += ansPtr->data;
+                    ansPtr->data = appendVal;
+                    ansPtr = ansPtr->next;
+                }
+                else
+                {
+                    append(&ans->head, appendVal);
+                }
+            }
+            startPosAns++;
+            ptr1 = ptr1->next;
+        }
+        if (carry != 0)
+            append(&ans->head, carry);
+        ptr2 = ptr2->next;
+    }
+    return *ans;
+}
 
