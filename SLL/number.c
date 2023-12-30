@@ -58,7 +58,7 @@ void displayNum(Number num)
     revList = revList->next;
     while (revList)
     {
-        printf("%09d", revList->data);
+        printf("%09dy", revList->data);
         revList = revList->next;
     }
     printf("\n");
@@ -219,50 +219,95 @@ Number mult(Number num1, Number num2)
     Node *ptr1 = num1.head, *ptr2 = num2.head;
     Number *ans = (Number *)malloc(sizeof(Number));
     init_Number(ans);
-    if(num1.isNegative^num2.isNegative) ans->isNegative=1;
+    if (num1.isNegative ^ num2.isNegative)
+        ans->isNegative = 1;
     int startPosAns = 0;
+    Node *ansPtr = ans->head;
     while (ptr2)
     {
-        int carry = 0;
+        ansPtr = ans->head;
+        for (int i = 0; i < startPosAns; i++)
+        {
+            ansPtr = ansPtr->next;
+        }
+        long long int carry = 0;
         while (ptr1)
         {
-            if (ans->head == NULL)
+            if (num2.head == ptr2)
             {
-                long long prod = (long long)ptr1->data*ptr2->data + carry;
-                int appendVal = prod % MAXNODEVAL;
+                long long prod = (long long)ptr1->data * ptr2->data + carry;
+                long long int appendVal = prod % MAXNODEVAL;
                 carry = prod / MAXNODEVAL;
                 append(&ans->head, appendVal);
             }
             else
             {
-                Node *ansPtr = ans->head;
-                for (int i = 0; i < startPosAns; i++)
-                {
-                    ansPtr = ansPtr->next;
-                }
-                long long prod = (long long)ptr1->data*ptr2->data + carry;
-                // printf("%d")
-                int appendVal = prod % MAXNODEVAL;
-                carry = prod / MAXNODEVAL;
 
                 if (ansPtr != NULL)
                 {
-                    prod += ansPtr->data;
-                    ansPtr->data = appendVal;
+                    long long prod = (long long)ptr1->data * ptr2->data + carry + ansPtr->data;
+                    long long newVal = prod % MAXNODEVAL;
+                    carry = prod / MAXNODEVAL;
+                    ansPtr->data = newVal;
                     ansPtr = ansPtr->next;
                 }
                 else
                 {
+                    long long prod = (long long)ptr1->data * ptr2->data + carry;
+                    int appendVal = prod % MAXNODEVAL;
+                    carry = prod / MAXNODEVAL;
                     append(&ans->head, appendVal);
                 }
             }
-            startPosAns++;
             ptr1 = ptr1->next;
         }
         if (carry != 0)
-            append(&ans->head, carry);
+        {
+            if (ansPtr == NULL)
+            {
+                append(&ans->head, carry);
+            }
+            else
+            {
+                ansPtr->data += carry;
+            }
+        }
+
         ptr2 = ptr2->next;
+        ptr1 = num1.head;
+        startPosAns++;
     }
     return *ans;
 }
 
+Number division(Number num1, Number num2)
+{
+    Number *ans = (Number *)malloc(sizeof(Number));
+    List revList1 = reverse(num1.head);
+    List revList2 = reverse(num2.head);
+    int len1 = length(revList1), len2 = length(revList2);
+    int diff_len = abs(len1 - len2);
+    return *ans;
+}
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+// #include"number.c"
+
+int main(int argc, char const *argv[])
+{
+    char *str = "-9876543210123456789012345678901234567890";
+    char *str1 = "1234567890987654321098765432109876543210";
+
+    Number *num1 = toNumber(str);
+    Number *num2 = toNumber(str1);
+
+    Number result = mult(*num1, *num2);
+    display(num1->head);
+    display(num2->head);
+    displayNum(*num1);
+    displayNum(*num2);
+    displayNum(result);
+
+    return 0;
+}
