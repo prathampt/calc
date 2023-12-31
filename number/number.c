@@ -17,6 +17,8 @@ void append(List *l, unsigned long long int data){
 
     if (!nn) return;
 
+    if (data == 0) return;
+
     nn->data = data;
     nn->next = NULL;
     nn->previous = NULL;
@@ -38,6 +40,8 @@ void insertAtBeginning(List *l, unsigned long long int data){
     Node * nn = (Node *) malloc(sizeof(Node));
 
     if (!nn) return;
+
+    if (data == 0) return;
 
     nn->data = data;
     nn->next = NULL;
@@ -75,7 +79,10 @@ int removeBeginning(List *l){
 }
 
 void display(Number num){
-    if (!num->front) return;
+    if (!num->front){
+        printf("0");
+        return;
+    }
 
     if (num->isNegative) printf("-"); // Will print a negative sign if the number is negative... 
 
@@ -93,6 +100,8 @@ void display(Number num){
 }
 
 short len(Number num){
+    if (!num->front) return 0;
+
     short count = 0;
 
     Node * p = num->front;
@@ -118,15 +127,16 @@ short greater(Number num1, Number num2){
     else {
         Node *p = num1->front, *q = num2->front;
 
-        while (p->data == q->data){
+        while (p && q && p->data == q->data){
             p = p->next;
             q = q->next;
         }
-        
-        return (p->data > q->data)? 1 : 0 ;
+
+        if (q) return 0;
+        else if (p && q) return (p->data > q->data)? 1 : 0 ;
+        else return 1; // if two numbers are exactly same...
     }
 
-    return 1; // if two numbers are exactly same...
 }
 
 Number toNumber(char * str){
@@ -244,7 +254,7 @@ Number justAdd(Number num1, Number num2, short isNegative){
     return l;     
 }
 
-Number justSubtract(Number num1, Number num2){ // Will complete today...
+Number justSubtract(Number num1, Number num2){
     int borrow = 0;
     Node *p, *q;
     
@@ -264,14 +274,18 @@ Number justSubtract(Number num1, Number num2){ // Will complete today...
 
     while (p && q)
     {   
-        long long int t = (long long int) p->data - q->data - borrow; // work needed to be done.......
-        insertAtBeginning(l, (unsigned long long int) ((t + LLONG_MAX) % LLONG_MAX - 1) % MAX );
+        long long int t = (long long int) p->data - q->data - borrow;
+
         if (t < 0){
+            t += MAX;
             borrow = 1;
         }
         else {
             borrow = 0;
         }
+
+        insertAtBeginning(l, (unsigned long long int) t % MAX );
+        
         p = p->previous;
         q = q->previous;
     }
@@ -292,7 +306,7 @@ Number justSubtract(Number num1, Number num2){ // Will complete today...
 
     Node *r = l->front;
 
-    while (r->data == 0){
+    while (r && r->data == 0){
         r = r->next;
         removeBeginning(l);
     }
