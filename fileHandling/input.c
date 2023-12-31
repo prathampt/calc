@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define SIZE 50
+
+#define SIZE 50 // Do something so that you don't need to store this size initially...
+
 char *input(FILE *file)
 {
     char *str;

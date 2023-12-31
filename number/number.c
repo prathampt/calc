@@ -3,6 +3,7 @@
 #include <limits.h>
 #include <string.h>
 #include "header.h"
+#define MAX 1000000000
 
 void init(List *l){
     l->isNegative = 0;
@@ -85,7 +86,7 @@ void display(Number num){
 
     while (p)
     {
-        printf("%010lld", p->data); // All the rest nodes will be printed formatted...
+        printf("%09lld", p->data); // All the rest nodes will be printed formatted...
         p = p->next;
     }
     return;  
@@ -216,23 +217,23 @@ Number justAdd(Number num1, Number num2, short isNegative){
     while (p && q)
     {   
         unsigned long long int t = p->data + q->data + carry;
-        insertAtBeginning(l, t % 1000000000);
-        carry = t / 1000000000;
+        insertAtBeginning(l, t % MAX);
+        carry = t / MAX;
         p = p->previous;
         q = q->previous;
     }
 
     while (p)
     {
-        insertAtBeginning(l, (p->data + carry)%1000000000);
-        carry = (p->data + carry)/1000000000;
+        insertAtBeginning(l, (p->data + carry) % MAX);
+        carry = (p->data + carry) / MAX;
         p = p->previous;
     }
 
     while (q)
     {
-        insertAtBeginning(l, (q->data + carry)%1000000000);
-        carry = (q->data + carry)/1000000000;
+        insertAtBeginning(l, (q->data + carry) % MAX);
+        carry = (q->data + carry) / MAX;
         q = q->previous;
     }
 
@@ -243,7 +244,7 @@ Number justAdd(Number num1, Number num2, short isNegative){
     return l;     
 }
 
-Number justSubtract(Number num1, Number num2){
+Number justSubtract(Number num1, Number num2){ // Will complete today...
     int borrow = 0;
     Node *p, *q;
     
@@ -264,7 +265,7 @@ Number justSubtract(Number num1, Number num2){
     while (p && q)
     {   
         long long int t = (long long int) p->data - q->data - borrow; // work needed to be done.......
-        insertAtBeginning(l, (unsigned long long int) ((t + LLONG_MAX) % LLONG_MAX - 1) % 1000000000 );
+        insertAtBeginning(l, (unsigned long long int) ((t + LLONG_MAX) % LLONG_MAX - 1) % MAX );
         if (t < 0){
             borrow = 1;
         }
