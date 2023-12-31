@@ -5,8 +5,16 @@
 
 int main(int argc, char const *argv[])
 {
-    char* str="1234234567754323456788654345678653456789";
-    Number* num=toNumber(str);
-    displayNum(*num);
+    char* str="12343543234";
+    char* str1="12322321";
+    
+    Number* num1=toNumber(str);
+    Number* num2=toNumber(str1);
+
+    Number mul=mult(*num1, *num2);
+    displayNum(*num1);             
+    displayNum(*num2);         
+    displayNum(mul);
+
     return 0;
 }
