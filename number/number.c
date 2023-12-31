@@ -17,8 +17,6 @@ void append(List *l, unsigned long long int data){
 
     if (!nn) return;
 
-    if (data == 0) return;
-
     nn->data = data;
     nn->next = NULL;
     nn->previous = NULL;
@@ -40,8 +38,6 @@ void insertAtBeginning(List *l, unsigned long long int data){
     Node * nn = (Node *) malloc(sizeof(Node));
 
     if (!nn) return;
-
-    if (data == 0) return;
 
     nn->data = data;
     nn->next = NULL;
@@ -76,6 +72,19 @@ int removeBeginning(List *l){
     free(p);
 
     return data;
+}
+
+void destroy(List *l){
+    while (l->front)
+    {
+        removeBeginning(l);
+    }
+
+    l->rear = NULL;
+    l->isNegative = 0;
+
+    return;
+    
 }
 
 void display(Number num){
@@ -212,7 +221,26 @@ Number subtract(Number num1, Number num2){
 
 }
 
-Number multiply(Number num1, Number num2);
+Number multiply(Number num1, Number num2){
+
+    if (!num1->front || !num2->front){
+        List *l = (List *)malloc(sizeof(List));
+        init(l);
+        return l;
+    }
+
+    if (num1->isNegative && num2->isNegative){
+        return justMultiply(num1, num2, 0);
+    }
+    else if (num1->isNegative || num2->isNegative){
+        return justMultiply(num1, num2, 1);
+    }
+    else {
+        return justMultiply(num1, num2, 0);
+    }
+
+}
+
 Number divide(Number num1, Number num2);
 
 Number justAdd(Number num1, Number num2, short isNegative){
@@ -316,5 +344,51 @@ Number justSubtract(Number num1, Number num2){
     
 }
 
-Number justMultiply(Number num1, Number num2, short isNegative);
+Number justMultiply(Number num1, Number num2, short isNegative){
+    long long int carry = 0;
+    int count = 0;
+    Node *p = num1->rear, *q = num2->rear;
+
+    List *l = (List *)malloc(sizeof(List));
+    init(l);
+
+    List *temp = (List *)malloc(sizeof(List));
+    init(temp);
+
+    if (isNegative) l->isNegative = 1;
+
+    while (q)
+    {
+        p = num1->rear;
+
+        while (p)
+        {
+            int qData = q->data;
+
+            unsigned long long int t = (unsigned long long int) p->data * qData + carry;
+            insertAtBeginning(temp, t % MAX);
+            carry = t / MAX;
+            p = p->previous;
+        }
+        if (carry != 0) insertAtBeginning(temp, carry);
+
+        for (int i = 0; i < count; i++)
+        {
+            append(temp, 0);
+        }
+
+        carry = 0;
+        
+        l = add(l, temp);
+
+        destroy(temp);
+        init(temp);
+
+        q = q->previous;
+        count++;
+    }
+    
+    return l;    
+}
+
 Number justDivide(Number num1, Number num2, short isNegative);

@@ -19,6 +19,7 @@ void init(List *l);
 void append(List *l, unsigned long long int data);
 void insertAtBeginning(List *l, unsigned long long int data);
 int removeBeginning(List *l);
+void destroy(List *l);
 
 void display(Number num);
 short len(Number num);
