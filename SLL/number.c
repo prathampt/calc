@@ -309,5 +309,21 @@ int main(int argc, char const *argv[])
     displayNum(*num2);
     displayNum(result);
 
+    Number *a = toNumber("9766504701");
+    Number *b = toNumber("9860568210");
+    Number *c = toNumber("9890072338");
+
+    Number d = mult(*a, *b);
+    Number e = mult(d, *c);
+
+    displayNum(*a);
+    printf("\n");
+    displayNum(*b);
+    printf("\n");
+    displayNum(*c);
+    printf("\n");
+    displayNum(e);
+    printf("\n");
+
     return 0;
 }
