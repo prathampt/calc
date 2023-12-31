@@ -6,6 +6,7 @@ typedef struct node {
 typedef struct list {
     short isNegative; // This will only take values 1 (if the number is negative) and 0 (otherwise)...
     Node * front, * rear;
+    Node * frontDec, * rearDec;
 } List;
 
 typedef List * Number;
@@ -20,6 +21,11 @@ void append(List *l, unsigned long long int data);
 void insertAtBeginning(List *l, unsigned long long int data);
 int removeBeginning(List *l);
 void destroy(List *l);
+
+void appendDec(List *l, unsigned long long int data);
+void insertAtBeginningDec(List *l, unsigned long long int data);
+int removeEndDec(List *l):
+void destroyDec(List *l);
 
 void display(Number num);
 short len(Number num);

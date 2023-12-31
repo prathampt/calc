@@ -9,6 +9,8 @@ void init(List *l){
     l->isNegative = 0;
     l->front = NULL;
     l->rear = NULL;
+    l->frontDec = NULL;
+    l->rearDec = NULL;
     return;
 }
 
@@ -87,24 +89,114 @@ void destroy(List *l){
     
 }
 
-void display(Number num){
-    if (!num->front){
-        printf("0");
-        return;
+void appendDec(List *l, unsigned long long int data){
+    Node * nn = (Node *) malloc(sizeof(Node));
+
+    if (!nn) return;
+
+    nn->data = data;
+    nn->next = NULL;
+    nn->previous = NULL;
+
+    if (!l->frontDec) {
+        l->frontDec = nn;
+        l->rearDec = nn;
     }
+    else {
+        nn->previous = l->rearDec;
+        l->rearDec->next = nn;
+        l->rearDec = nn;
+    }
+
+    return;
+}
+
+void insertAtBeginningDec(List *l, unsigned long long int data){
+    Node * nn = (Node *) malloc(sizeof(Node));
+
+    if (!nn) return;
+
+    nn->data = data;
+    nn->next = NULL;
+    nn->previous = NULL;
+
+    if (!l->frontDec) {
+        l->frontDec = nn;
+        l->rearDec = nn;
+    }
+    else {
+        nn->next = l->frontDec;
+        l->frontDec->previous = nn;
+        l->frontDec = nn;
+    }
+
+    return;
+}
+
+int removeEndDec(List *l){
+    if (!l->rearDec) return INT_MIN;
+    Node *p = l->rearDec;
+
+    l->rearDec = l->rearDec->previous;
+
+    if (!l->rearDec){
+        l->frontDec = NULL;
+        return INT_MIN;
+    }
+
+    l->rearDec->next = NULL;
+
+    int data = p->data;
+
+    free(p);
+
+    return data;
+}
+
+void destroyDec(List *l){
+    while (l->rearDec)
+    {
+        removeEndDec(l);
+    }
+
+    l->frontDec = NULL;
+    l->isNegative = 0;
+
+    return;
+}
+
+void display(Number num){
 
     if (num->isNegative) printf("-"); // Will print a negative sign if the number is negative... 
 
-    Node * p = num->front;
+    if (!num->front){
+        printf("0");
+    } else {
 
-    printf("%lld", p->data); // This code will print only the first node as it is...
-    p = p->next;
+        Node * p = num->front;
 
-    while (p)
-    {
-        printf("%09lld", p->data); // All the rest nodes will be printed formatted...
+        printf("%lld", p->data); // This code will print only the first node as it is...
         p = p->next;
+
+        while (p)
+        {
+            printf("%09lld", p->data); // All the rest nodes will be printed formatted...
+            p = p->next;
+        }
+
     }
+
+    if (num->frontDec){
+        printf(".");
+
+        Node * p = num->frontDec;
+
+        while (p) {
+            printf("%lld", p->data);
+            p = p->next;
+        }
+    }
+
     return;  
 }
 
@@ -114,6 +206,22 @@ short len(Number num){
     short count = 0;
 
     Node * p = num->front;
+
+    while (p)
+    {
+        count++;
+        p = p->next;
+    }
+    
+    return count;
+}
+
+short lenDec(Number num){
+    if (!num->frontDec) return 0;
+
+    short count = 0;
+
+    Node * p = num->frontDec;
 
     while (p)
     {
@@ -147,6 +255,9 @@ short greater(Number num1, Number num2){
     }
 
 }
+
+// Changes implemented till here for new updated data structure...
+// Changes below are yet to be implemented...
 
 Number toNumber(char * str){
     int i = 0;
