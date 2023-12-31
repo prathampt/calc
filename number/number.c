@@ -159,12 +159,12 @@ Number toNumber(char * str){
 
     if ((c = *(str+i)) == '-'){
         l->isNegative = 1;
-        *(str+i) = '\0';
+        // *(str+i) = '\0';
         i++;
     }
 
     while ((c = *(str+i)) == ' '){
-        *(str+i) = '\0';
+        // *(str+i) = '\0';
         i++; // If the string contains spaces it will handle the spaces...
     }
 
@@ -177,6 +177,7 @@ Number toNumber(char * str){
         {
             c = *(str+i);
             i--;
+            if (c == '-' || c == ' ') break;
             a[j] = c;
         }
 
@@ -240,8 +241,6 @@ Number multiply(Number num1, Number num2){
     }
 
 }
-
-Number divide(Number num1, Number num2);
 
 Number justAdd(Number num1, Number num2, short isNegative){
     short carry = 0;
@@ -355,8 +354,6 @@ Number justMultiply(Number num1, Number num2, short isNegative){
     List *temp = (List *)malloc(sizeof(List));
     init(temp);
 
-    if (isNegative) l->isNegative = 1;
-
     while (q)
     {
         p = num1->rear;
@@ -387,8 +384,8 @@ Number justMultiply(Number num1, Number num2, short isNegative){
         q = q->previous;
         count++;
     }
+
+    if (isNegative) l->isNegative = 1;
     
     return l;    
 }
-
-Number justDivide(Number num1, Number num2, short isNegative);

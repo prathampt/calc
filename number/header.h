@@ -34,9 +34,7 @@ Number toNumber(char * str);
 Number add(Number num1, Number num2);
 Number subtract(Number num1, Number num2);
 Number multiply(Number num1, Number num2);
-Number divide(Number num1, Number num2);
 
 Number justAdd(Number num1, Number num2, short isNegative);
 Number justSubtract(Number num1, Number num2);
 Number justMultiply(Number num1, Number num2, short isNegative);
-Number justDivide(Number num1, Number num2, short isNegative);
