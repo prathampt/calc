@@ -265,7 +265,7 @@ short greater(Number num1, Number num2){
     else if (x) return 1;
     else if (y) return 0;
     else return 1;
-       
+
 }
 
 Number toNumber(char * str){
@@ -330,9 +330,6 @@ Number toNumber(char * str){
     return l;
 }
 
-// Changes implemented till here for new updated data structure...
-// Changes below are yet to be implemented...
-
 Number add(Number num1, Number num2){
 
     if (num1->isNegative && num2->isNegative){
@@ -369,7 +366,7 @@ Number subtract(Number num1, Number num2){
 
 Number multiply(Number num1, Number num2){
 
-    if (!num1->front || !num2->front){
+    if ((!num1->front && !num1->frontDec) || (!num2->front && !num2->frontDec)){
         List *l = (List *)malloc(sizeof(List));
         init(l);
         return l;
@@ -388,14 +385,52 @@ Number multiply(Number num1, Number num2){
 }
 
 Number justAdd(Number num1, Number num2, short isNegative){
-    short carry = 0;
+    short carry = 0, carryDec = 0;
     Node *p = num1->rear, *q = num2->rear;
+    Node *x = num1->frontDec, *y = num2->frontDec;
 
     List *l = (List *)malloc(sizeof(List));
     init(l);
 
     if (isNegative) l->isNegative = 1;
 
+    // First adding digits after decimal point...
+
+    if (x && y) {
+        unsigned long long int tDec = x->data + y->data;
+        appendDec(l, tDec % MAX);
+        carry = tDec / MAX;
+        x = x->next;
+        y = y->next;
+    }
+
+    while (x && y)
+    {
+        unsigned long long int tDec = x->data + y->data;
+        appendDec(l, tDec % MAX);
+        carryDec = tDec / MAX;
+        x = x->next;
+        y = y->next;
+
+        if (carryDec){
+            l->rearDec->previous->data += 1;
+        }
+    }
+
+    while (x)
+    {
+        appendDec(l, x->data);
+        x = x->next;
+    }
+
+    while (y)
+    {
+        appendDec(l, y->data);
+        y = y->next;
+    }
+
+    // Now adding digits before decimal points...
+    
     while (p && q)
     {   
         unsigned long long int t = p->data + q->data + carry;
@@ -425,6 +460,9 @@ Number justAdd(Number num1, Number num2, short isNegative){
     
     return l;     
 }
+
+// Changes implemented till here for new updated data structure...
+// Changes below are yet to be implemented...
 
 Number justSubtract(Number num1, Number num2){
     int borrow = 0;
