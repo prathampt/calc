@@ -24,7 +24,7 @@ void destroy(List *l);
 
 void appendDec(List *l, unsigned long long int data);
 void insertAtBeginningDec(List *l, unsigned long long int data);
-int removeEndDec(List *l):
+int removeEndDec(List *l);
 void destroyDec(List *l);
 
 void display(Number num);

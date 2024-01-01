@@ -256,14 +256,16 @@ short greater(Number num1, Number num2){
 
 }
 
-// Changes implemented till here for new updated data structure...
-// Changes below are yet to be implemented...
-
 Number toNumber(char * str){
     int i = 0;
     char c;
-    int len = strlen(str);
+    int count = strlen(str);
 
+    int len = 0;
+    while ((c = *(str+len)) != '.' && c != '\0'){
+        len++;
+    }
+    
     List * l = (List *)malloc(sizeof(List));
 
     init(l);
@@ -283,8 +285,8 @@ Number toNumber(char * str){
 
     while (c != '\0' && i != -1)
     {
-        char a[11] = "0000000000"; // This will ensure that even if the loop break earlier, the correct number is read...
-        for (int j = 9; j > 0 && c != '\0' && i != -1; j--)
+        char a[10] = "000000000"; // This will ensure that even if the loop break earlier, the correct number is read...
+        for (int j = 8; j >= 0 && c != '\0' && i != -1; j--)
         {
             c = *(str+i);
             i--;
@@ -292,12 +294,32 @@ Number toNumber(char * str){
             a[j] = c;
         }
 
-        a[10] = '\0';
+        a[9] = '\0';
         insertAtBeginning(l, (unsigned long long int) atoll(a));
+    }
+
+    c = *(str+len+1);
+    i = len + 1;
+
+    while (c != '\0' && i <= count - 1)
+    {
+        char a[10] = "000000000"; // This will ensure that even if the loop break earlier, the correct number is read...
+        for (int j = 0; j < 9 && c != '\0' && i <= count - 1; j++)
+        {
+            c = *(str + i);
+            i++;
+            a[j] = c;
+        }
+
+        a[9] = '\0';
+        appendDec(l, (unsigned long long int) atoll(a));
     }
     
     return l;
 }
+
+// Changes implemented till here for new updated data structure...
+// Changes below are yet to be implemented...
 
 Number add(Number num1, Number num2){
 
