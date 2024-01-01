@@ -249,11 +249,23 @@ short greater(Number num1, Number num2){
             q = q->next;
         }
 
-        if (q) return 0;
-        else if (p && q) return (p->data > q->data)? 1 : 0 ;
-        else return 1; // if two numbers are exactly same...
+        if (p && q) return (p->data > q->data)? 1 : 0 ;
     }
 
+    // if two numbers are exactly same before decimal point...
+
+    Node * x = num1->frontDec, * y = num2->frontDec;
+
+    while (x && y && x->data == y->data){
+        x = x->next;
+        y = y->next;
+    }
+
+    if (x && y) return (x->data > y->data)? 1 : 0;
+    else if (x) return 1;
+    else if (y) return 0;
+    else return 1;
+       
 }
 
 Number toNumber(char * str){
