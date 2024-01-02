@@ -1,6 +1,6 @@
 #include "logic.c"
 int main(){
-    char * string = "1.01*203.4+94-47*-4";
+    char * string = "1.01*203.4+94-47*--4";
 
     int len = 0, i = 0;
     char c;
