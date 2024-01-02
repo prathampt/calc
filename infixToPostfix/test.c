@@ -1,6 +1,6 @@
 #include "logic.c"
 int main(){
-    char * string = "1.0+9.6*34-8^4%5";
+    char * string = "1.01*203.4+94-47*-4";
 
     int len = 0, i = 0;
     char c;
@@ -8,7 +8,7 @@ int main(){
         len++;
     }    
 
-    char * answer = infixToPostfix(string, len);
+    char * answer = infixToPostfix(string, len * 2);
 
     while ((c = answer[i]) != '\0')
     {
