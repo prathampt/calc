@@ -8,7 +8,7 @@ int main(){
         len++;
     }    
 
-    char * answer = infixToPostfix(string, len * 2);
+    char * answer = infixToPostfix(string, len);
 
     while ((c = answer[i]) != '\0')
     {

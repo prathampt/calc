@@ -192,7 +192,7 @@ void display(Number num){
         Node * p = num->frontDec;
 
         while (p) {
-            printf("%lld", p->data);
+            printf("%09lld", p->data);
             p = p->next;
         }
     }
@@ -315,7 +315,7 @@ Number toNumber(char * str){
 
     while (c != '\0' && i <= count - 1)
     {
-        char a[10] = "000000000"; // This will ensure that even if the loop break earlier, the correct number is read...
+        char a[10] = {'\0','\0','\0','\0','\0','\0','\0','\0','\0'}; // This will ensure that the zero's after the last significant digit will not print...
         for (int j = 0; j < 9 && c != '\0' && i <= count - 1; j++)
         {
             c = *(str + i);
@@ -465,8 +465,10 @@ Number justAdd(Number num1, Number num2, short isNegative){
 // Changes below are yet to be implemented...
 
 Number justSubtract(Number num1, Number num2){
-    int borrow = 0;
+    int borrow = 0, borrowDec = 0;
+    int xlen = 0, ylen = 0;
     Node *p, *q;
+    Node *x, *y;
     
     List *l = (List *)malloc(sizeof(List));
     init(l);
@@ -475,12 +477,109 @@ Number justSubtract(Number num1, Number num2){
         l->isNegative = 0;
         p = num1->rear; 
         q = num2->rear;
+        x = num1->rearDec;
+        xlen = lenDec(num1);
+        y = num2->rearDec;
+        ylen = lenDec(num2);
     }
     else {
         l->isNegative = 1;
         p = num2->rear;
         q = num1->rear;
+        x = num2->rearDec;
+        xlen = lenDec(num2);
+        y = num1->rearDec;
+        ylen = lenDec(num1);
     }
+    
+    // if (x && y){
+
+    //     borrow = (x->data < y->data)? 1 : 0;
+
+    //     while (x->next && y->next)
+    //     {
+    //         long long int t = (long long int) x->data - y->data - ((x->next->data < y->next->data)? 1 : 0);
+            
+    //         if (t < 0) t += MAX;
+
+    //         appendDec(l,  (unsigned long long int) t % MAX);
+    //         x = x->next;
+    //         y = y->next;
+    //     }
+
+    //     if (y->next){
+    //         long long int t = (long long int) x->data - y->data - 1;
+            
+    //         if (t < 0) t += MAX;
+
+    //         appendDec(l,  (unsigned long long int) t % MAX);
+    //         x = x->next;
+    //         y = y->next;
+    //     }
+    //     else{
+    //         long long int t = (long long int) x->data - y->data;
+            
+    //         if (t < 0){
+    //             borrowDec = 1;
+    //             t += MAX;
+    //         }
+
+    //         appendDec(l,  (unsigned long long int) t % MAX);
+    //         x = x->next;
+    //         y = y->next;
+    //     }
+
+    // }
+
+    // while (x){
+    //     long long int t = (long long int) x->data - y->data;
+    //     appendDec(l, x->data - borrowDec);
+    //     x = x->next;
+    // }
+
+    // while (y->next){
+    //     appendDec(l, MAX - y->data - 1);
+    //     y = y->next;
+    // }
+    
+    // appendDec(l, MAX - y->data);
+    // y = y->next;
+
+    while (xlen > ylen)
+    {
+        insertAtBeginningDec(l, x->data);
+        x = x->previous;
+        xlen--;
+    }
+
+    while (ylen > xlen)
+    {
+        insertAtBeginningDec(l, MAX - y->data - borrowDec);
+        y = y->previous;
+        borrowDec = 1;
+        ylen--;
+    }
+
+    while (x && y)
+    {
+        long long int t = (long long int) x->data - y->data - borrowDec;
+
+        if (t < 0){
+            t += MAX;
+            borrowDec = 1;
+        }
+        else {
+            borrowDec = 0;
+        }
+
+        insertAtBeginningDec(l, (unsigned long long int) t % MAX);
+
+        x = x->previous;
+        y = y->previous;
+
+    }
+    
+    borrow = borrowDec;
 
     while (p && q)
     {   
@@ -494,7 +593,7 @@ Number justSubtract(Number num1, Number num2){
             borrow = 0;
         }
 
-        insertAtBeginning(l, (unsigned long long int) t % MAX );
+        insertAtBeginning(l, (unsigned long long int) t % MAX);
         
         p = p->previous;
         q = q->previous;
@@ -509,7 +608,7 @@ Number justSubtract(Number num1, Number num2){
 
     while (q)
     {
-        insertAtBeginning(l, q->data - borrow);
+        insertAtBeginning(l, - q->data - borrow);
         borrow = 0;
         q = q->previous;
     }
