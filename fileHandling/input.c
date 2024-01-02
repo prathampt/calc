@@ -16,7 +16,7 @@ char *input(FILE *file)
     {
         if (count >= SIZE)
         {
-            size += 10;
+            size *= 2;
             str=(char* )realloc(str, size);
             if (str==NULL)
             {

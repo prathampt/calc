@@ -8,11 +8,14 @@ int main()
     char*str=input(history);
     int len=strlen(str);
     char *postfixStr=infixToPostfix(str,len);
-    fclose(history);
-    for (int i = 0; postfixStr[i]!='\0'; i++)
+    for (int i = 0; i < strlen(postfixStr); i++)
     {
         printf("%c",postfixStr[i]);
     }
-    return 0;
+    printf("\n");
+    
+    fclose(history);
+
+
 }
 
