@@ -37,7 +37,7 @@ char * infixToPostfix(char * str, int n){
 
     int i = 0, j = 0, operator = 0;
     char c;
-    char * answer = (char *)malloc(n * sizeof(char));
+    char * answer = (char *)malloc(2 * n * sizeof(char));
 
     while ((c = str[i]) != '\0'){
         if (c == ' '){
@@ -68,6 +68,10 @@ char * infixToPostfix(char * str, int n){
             if (operator){
                 if (c == '-'){
                     answer[j++] = c;
+                    i++;
+                    continue;
+                }
+                else if (c == '+'){
                     i++;
                     continue;
                 }
