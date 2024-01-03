@@ -1,28 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include<ctype.h>
 #include "NumberStack.h"
 
-void SLL_init(Stack *s){
+void SLL_initNum(StackNum *s){
     s->top = NULL;
     return;
 }
 
-int isEmpty(Stack s){
+int isEmptyNum(StackNum s){
     if (s.top == NULL) return 1;
 
     return 0;
 }
 
-void push(Stack *s, Number data){
-    SLL_Node * nn = (SLL_Node *) malloc(sizeof(SLL_Node));
+void pushNum(StackNum *s, Number data){
+    SLL_NodeNum * nn = (SLL_NodeNum *) malloc(sizeof(SLL_NodeNum));
 
     if (!nn) return;
 
     nn->num = data;
     nn->next = NULL;
 
-    if (isEmpty(*s))    
+    if (isEmptyNum(*s))    
     {
         s->top = nn;
         return;
@@ -36,30 +37,31 @@ void push(Stack *s, Number data){
     return;
 }
 
-Number pop(Stack *s){
-    if (isEmpty(*s)) return LLONG_MIN;
+Number popNum(StackNum *s){
+    if (isEmptyNum(*s)) return NULL;
 
-    SLL_Node *p = s->top;
+    SLL_NodeNum *p = s->top;
     Number data = p->num;
     s->top = p->next;
     free(p);
     return data;
 }
 
-Number peek(Stack s){
-    if (isEmpty(s)) return CHAR_MIN;
+Number peekNum(StackNum s){
+    if (isEmptyNum(s)) return NULL;
 
     return s.top->num;
 }
 
-void SLL_display(Stack s){
-    if (isEmpty(s)) return;
+void SLL_displayNum(StackNum s){
+    if (isEmptyNum(s)) return;
 
-    printf("Displaying the Stack: ");
+    printf("Displaying the StackNum: ");
 
-    for (SLL_Node * p = s.top; p != NULL; p = p->next)
+    for (SLL_NodeNum * p = s.top; p != NULL; p = p->next)
     {
         display(p->num);
+        printf(" ");
     }
     
     printf("\b\b   \n");
