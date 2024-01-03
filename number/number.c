@@ -183,7 +183,6 @@ void display(Number num){
             printf("%09lld", p->data); // All the rest nodes will be printed formatted...
             p = p->next;
         }
-        printf("\n");
     }
 
     if (num->frontDec){
@@ -208,6 +207,7 @@ void display(Number num){
         p = p->next;
 
     }
+    printf("\n");
 
     return;  
 }
@@ -736,10 +736,12 @@ Number justMultiply(Number num1, Number num2, short isNegative){
         // Resolving the side effects caused above to the num1 and num2...
 
         num1->rear->next = NULL;
-        num1->frontDec->previous = NULL;
+        if (num1->frontDec) num1->frontDec->previous = NULL;
+        
+        
 
         num2->rear->next = NULL;
-        num2->frontDec->previous = NULL; 
+        if(num2->frontDec) num2->frontDec->previous = NULL; 
 
         Node *r = l->rearDec;
 

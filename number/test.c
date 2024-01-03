@@ -94,7 +94,7 @@ int main(){
     Number d = multiply(a, b);
     display(d);
     printf(" * ");
-    Number c = toNumber("-989007233.8");
+    Number c = toNumber("-989007233");
     display(c);
     printf(" == ");
 
