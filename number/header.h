@@ -20,14 +20,14 @@ void init(List *l);
 void append(List *l, unsigned long long int data);
 void insertAtBeginning(List *l, unsigned long long int data);
 int removeBeginning(List *l);
-void destroy(List *l);
+void destroy(List *l);// destory the integer part
 
 void appendDec(List *l, unsigned long long int data);
 void insertAtBeginningDec(List *l, unsigned long long int data);
 int removeEndDec(List *l);
-void destroyDec(List *l);
+void destroyDec(List *l);// destory the decimal part
 
-void display(Number num);
+void display(Number num);// displays numbber
 short len(Number num);
 short greater(Number num1, Number num2); // this will return 1 if first number is greater than second number or 0 otherwise...
 
