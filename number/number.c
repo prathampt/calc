@@ -183,7 +183,7 @@ void display(Number num){
             printf("%09lld", p->data); // All the rest nodes will be printed formatted...
             p = p->next;
         }
-
+        printf("\n");
     }
 
     if (num->frontDec){
