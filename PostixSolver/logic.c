@@ -48,6 +48,7 @@ Number posfixSolver(char *postStr)
                 numStr = realloc(numStr, size);
             }
             numStr[j++] = postStr[i];
+            operatorCheck=0;
         }
         else if (isOperatorNum(postStr[i]))
         {
@@ -65,9 +66,9 @@ Number posfixSolver(char *postStr)
             }
             else
             {
-                op1 = popNum(&operandStack);
                 op2 = popNum(&operandStack);
-                if (!op2)
+                op1 = popNum(&operandStack);
+                if (!op1)
                 {
                     printf("Error");
                     return NULL;
@@ -77,11 +78,13 @@ Number posfixSolver(char *postStr)
             answer = PerfromOperation(op1, op2, postStr[i]);
             destroy(prevAns);
             pushNum(&operandStack, answer);
+            // SLL_displayNum(operandStack);
         }
         else if (postStr[i] == ' ')
         {
-            if (isOperatorNum(postStr[i+1]))
+            if (isOperatorNum(postStr[i+1]) || operatorCheck)
             {
+                j=0;
                 continue;
             }
             numStr[j++]='\0';
@@ -94,4 +97,16 @@ Number posfixSolver(char *postStr)
     }
 
     return answer;
+}
+#include"../infixToPostfix/logic.c"
+#include"../fileHandling/input.c"
+int main(int argc, char const *argv[])
+{
+    FILE *history=fopen("history.txt","a");
+    char* str=input(history);
+    int len = strlen(str);
+    char* postfixStr = infixToPostfix(str, len);
+    Number answer = posfixSolver(postfixStr);
+    display(answer);
+    return 0;
 }
