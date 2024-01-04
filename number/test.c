@@ -84,22 +84,22 @@ int main(){
     // display(d);
     // printf("\n");
 
-    Number a = toNumber("-97665.04701");
+    Number a = toNumber("72785681265.1725214614141179987");
     display(a);
     printf(" * ");
-    Number b = toNumber("9860.568210");
+    Number b = toNumber("12514541541455.18");
     display(b);
     printf(" = ");
 
     Number d = multiply(a, b);
     display(d);
-    printf(" * ");
-    Number c = toNumber("-989007233");
-    display(c);
-    printf(" == ");
+    // printf(" * ");
+    // Number c = toNumber("-989007233");
+    // display(c);
+    // printf(" == ");
 
-    Number e = multiply(d, c);    
-    display(e);
+    // Number e = multiply(d, c);    
+    // display(e);
     printf("                    \n");
 
     return 0;

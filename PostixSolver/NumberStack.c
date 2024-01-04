@@ -61,7 +61,7 @@ void SLL_displayNum(StackNum s){
     for (SLL_NodeNum * p = s.top; p != NULL; p = p->next)
     {
         display(p->num);
-        printf(" ");
+        printf("   ");
     }
     
     printf("\b\b   \n");

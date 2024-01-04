@@ -27,7 +27,7 @@ void insertAtBeginningDec(List *l, unsigned long long int data);
 int removeEndDec(List *l);
 void destroyDec(List *l);// destory the decimal part
 
-void display(Number num);// displays numbber
+void display(Number num);// displays number
 short len(Number num);
 short greater(Number num1, Number num2); // this will return 1 if first number is greater than second number or 0 otherwise...
 
