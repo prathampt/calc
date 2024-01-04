@@ -48,15 +48,23 @@ Number posfixSolver(char *postStr)
                 numStr = realloc(numStr, size);
             }
             numStr[j++] = postStr[i];
+            numStr[j]='\0';
             operatorCheck=0;
         }
         else if (isOperatorNum(postStr[i]))
         {
+            if (isdigit(postStr[i+1]))// if -3 Note as per our infixToPostfix function if there is some sign to number then       don't add space to detect that this sign and not operator 
+            {
+                numStr[j++]=postStr[i];
+                continue;
+            }
+            
             if (isEmptyNum(operandStack))
             {
                 printf("This is error");
                 return NULL;
             }
+
             Number op1,op2; 
             if (!operatorCheck)
             {
@@ -76,17 +84,18 @@ Number posfixSolver(char *postStr)
             }
             Number prevAns = answer;
             answer = PerfromOperation(op1, op2, postStr[i]);
-            destroy(prevAns);
+            // destroy(prevAns);
             pushNum(&operandStack, answer);
             // SLL_displayNum(operandStack);
         }
         else if (postStr[i] == ' ')
         {
-            if (isOperatorNum(postStr[i+1]) || operatorCheck)
+            if (isOperatorNum(postStr[i+1]) && postStr[i+2] == ' ' || operatorCheck)
             {
                 j=0;
                 continue;
             }
+            
             numStr[j++]='\0';
             j=0;
             // printf("%s ",numStr);
@@ -97,16 +106,4 @@ Number posfixSolver(char *postStr)
     }
 
     return answer;
-}
-#include"../infixToPostfix/logic.c"
-#include"../fileHandling/input.c"
-int main(int argc, char const *argv[])
-{
-    FILE *history=fopen("history.txt","a");
-    char* str=input(history);
-    int len = strlen(str);
-    char* postfixStr = infixToPostfix(str, len);
-    Number answer = posfixSolver(postfixStr);
-    display(answer);
-    return 0;
 }
