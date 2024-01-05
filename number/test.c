@@ -84,23 +84,34 @@ int main(){
     // display(d);
     // printf("\n");
 
-    Number a = toNumber("72785681265.1725214614141179987");
-    display(a);
-    printf(" * ");
-    Number b = toNumber("12514541541455.18");
-    display(b);
-    printf(" = ");
-
-    Number d = multiply(a, b);
-    display(d);
+    // Number a = toNumber("72785681265.1725214614141179987");
+    // display(a);
     // printf(" * ");
-    // Number c = toNumber("-989007233");
-    // display(c);
-    // printf(" == ");
+    // Number b = toNumber("12514541541455.18");
+    // display(b);
+    // printf(" = ");
 
-    // Number e = multiply(d, c);    
-    // display(e);
-    printf("                    \n");
+    // Number d = multiply(a, b);
+    // display(d);
+    // // printf(" * ");
+    // // Number c = toNumber("-989007233");
+    // // display(c);
+    // // printf(" == ");
+
+    // // Number e = multiply(d, c);    
+    // // display(e);
+    // printf("                    \n");
+
+    Number a = toNumber("635.78");
+    display(a);
+    printf("\n");
+    Number b = toNumber("78");
+    display(b);
+    printf("\n");
+
+    Number c = power(a, b);
+    display(c);
+    printf("\n");
 
     return 0;
 }

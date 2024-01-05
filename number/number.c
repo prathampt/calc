@@ -753,3 +753,25 @@ Number justMultiply(Number num1, Number num2, short isNegative){
     
     return l;    
 }
+
+Number power(Number num1, Number num2){
+    if (len(num2) > 1 || lenDec(num2) != 0) return toNumber("1");
+
+    unsigned long long int t = num2->front->data;
+
+    return powerHelper(num1, t);
+}
+
+Number powerHelper(Number num1, unsigned long long int num2){
+    if (num2 == 0){
+        return toNumber("1");
+    }
+    else if (num2 == 1){
+        return num1;
+    }
+
+    Number temp = multiply(powerHelper(num1, num2/2), powerHelper(num1, num2/2));
+
+    if (num2 % 2 == 0) return temp;
+    else return multiply(temp, num1); 
+}

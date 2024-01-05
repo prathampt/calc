@@ -24,6 +24,8 @@ Number PerfromOperation(Number num1, Number num2, char op)
         return subtract(num1, num2);
     case '*':
         return multiply(num1, num2);
+    case '^':
+        return power(num1, num2);
     default:
         return NULL;
     }

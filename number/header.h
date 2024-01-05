@@ -40,7 +40,10 @@ Number toNumber(char * str);
 Number add(Number num1, Number num2);
 Number subtract(Number num1, Number num2);
 Number multiply(Number num1, Number num2);
+// Number divide(Number num1, Number num2);
+Number power(Number num1, Number num2);
 
 Number justAdd(Number num1, Number num2, short isNegative);
 Number justSubtract(Number num1, Number num2);
 Number justMultiply(Number num1, Number num2, short isNegative);
+Number powerHelper(Number num1, unsigned long long int num2);
