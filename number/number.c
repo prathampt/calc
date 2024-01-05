@@ -761,7 +761,7 @@ Number power(Number num1, Number num2){
     }
 
     if (lenDec(num2) != 0){
-        printf("Warning: Ignoring the decimal part of exponent!\n");
+        printf("Warning: Ignoring the decimal part!\n");
     }
 
     unsigned long long int t = num2->front->data;
@@ -781,4 +781,13 @@ Number powerHelper(Number num1, unsigned long long int num2){
 
     if (num2 % 2 == 0) return temp;
     else return multiply(temp, num1); 
+}
+
+Number bitwiseLeftShift(Number num1, Number num2){
+    if (len(num2) > 1){
+        printf("Warning: Shifting Number too long!\n");
+        return toNumber("1");
+    }
+    
+    return multiply(num1, power(toNumber("2"), num2));
 }

@@ -102,16 +102,13 @@ int main(){
     // // display(e);
     // printf("                    \n");
 
-    Number a = toNumber("635.78");
+    Number a = toNumber("7654654654865");
     display(a);
-    printf("\n");
-    Number b = toNumber("78");
+    Number b = toNumber("65897");
     display(b);
-    printf("\n");
 
-    Number c = power(a, b);
+    Number c = bitwiseLeftShift(a, b);
     display(c);
-    printf("\n");
 
     return 0;
 }
