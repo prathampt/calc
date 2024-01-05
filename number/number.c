@@ -755,7 +755,14 @@ Number justMultiply(Number num1, Number num2, short isNegative){
 }
 
 Number power(Number num1, Number num2){
-    if (len(num2) > 1 || lenDec(num2) != 0) return toNumber("1");
+    if (len(num2) > 1){
+        printf("Warning: Exponent too long!\n");
+        return toNumber("1");
+    }
+
+    if (lenDec(num2) != 0){
+        printf("Warning: Ignoring the decimal part of exponent!\n");
+    }
 
     unsigned long long int t = num2->front->data;
 
