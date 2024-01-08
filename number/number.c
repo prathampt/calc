@@ -461,6 +461,34 @@ Number multiply(Number num1, Number num2)
     }
 }
 
+Number divide(Number num1, Number num2)
+{
+    if (!num1->front && !num1->frontDec)
+    {
+        List *l = (List *)malloc(sizeof(List));
+        init(l);
+        return l;
+    }
+    else if (!num2->front && !num2->frontDec)
+    {
+        printf("Error: Cannot Divide by Zero!\n");
+        return toNumber("0");
+    }
+
+    if (num1->isNegative && num2->isNegative)
+    {
+        return justDivide(num1, num2, 0);
+    }
+    else if (num1->isNegative || num2->isNegative)
+    {
+        return justDivide(num1, num2, 1);
+    }
+    else
+    {
+        return justDivide(num1, num2, 0);
+    }
+}
+
 Number justAdd(Number num1, Number num2, short isNegative)
 {
     short carry = 0, carryDec = 0;
@@ -838,6 +866,11 @@ Number justMultiply(Number num1, Number num2, short isNegative)
     }
 
     return l;
+}
+
+Number justDivide(Number num1, Number num2)
+{
+    return toNumber("0");
 }
 
 Number power(Number num1, Number num2)
