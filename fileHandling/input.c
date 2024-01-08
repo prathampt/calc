@@ -17,17 +17,16 @@ char *input(FILE *file)
         if (count >= SIZE)
         {
             size += 25;
-            str=(char* )realloc(str, size);
-            if (str==NULL)
+            str = (char *)realloc(str, size);
+            if (str == NULL)
             {
                 return NULL;
             }
-            
         }
         fprintf(file, "%c", c);
-        str[count]=(char)c;   
+        str[count] = (char)c;
         count++;
     }
-    fprintf(file,"\n");
+    fprintf(file, "\n");
     return str;
 }

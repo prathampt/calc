@@ -1,11 +1,13 @@
-typedef struct SLL_node{
+typedef struct SLL_node
+{
     char data;
-    struct SLL_node * next;
-}SLL_Node;
+    struct SLL_node *next;
+} SLL_Node;
 
-typedef struct stack{
+typedef struct stack
+{
     SLL_Node *top;
-}Stack;
+} Stack;
 
 void SLL_init(Stack *s);
 int isEmpty(Stack s);

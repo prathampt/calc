@@ -2,8 +2,9 @@
 #include <limits.h>
 #include "number.c"
 
-int main(){
-    
+int main()
+{
+
     // Number x = toNumber("10000000000000000000");
     // Number y = toNumber("283749999999999999999999999999999999999999");
     // Number z = toNumber("0");
@@ -24,7 +25,6 @@ int main(){
     // printf("\n");
     // display(p);
     // printf("\n");
-
 
     // Number a = toNumber("-9766504701");
     // Number b = toNumber("9860568210");
@@ -59,7 +59,6 @@ int main(){
     // Number e = add(b, c);
     // display(e);
     // printf("\n");
-
 
     // Number a = toNumber("1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890.987654321098765432109876543210987654321098765432109876543210987654321098765432109876543210987654321");
     // display(a);
@@ -98,7 +97,7 @@ int main(){
     // // display(c);
     // // printf(" == ");
 
-    // // Number e = multiply(d, c);    
+    // // Number e = multiply(d, c);
     // // display(e);
     // printf("                    \n");
 

@@ -5,7 +5,8 @@
 #include "header.h"
 #define MAX 1000000000
 
-void init(List *l){
+void init(List *l)
+{
     l->isNegative = 0;
     l->front = NULL;
     l->rear = NULL;
@@ -14,20 +15,24 @@ void init(List *l){
     return;
 }
 
-void append(List *l, unsigned long long int data){
-    Node * nn = (Node *) malloc(sizeof(Node));
+void append(List *l, unsigned long long int data)
+{
+    Node *nn = (Node *)malloc(sizeof(Node));
 
-    if (!nn) return;
+    if (!nn)
+        return;
 
     nn->data = data;
     nn->next = NULL;
     nn->previous = NULL;
 
-    if (!l->front) {
+    if (!l->front)
+    {
         l->front = nn;
         l->rear = nn;
     }
-    else {
+    else
+    {
         nn->previous = l->rear;
         l->rear->next = nn;
         l->rear = nn;
@@ -36,20 +41,24 @@ void append(List *l, unsigned long long int data){
     return;
 }
 
-void insertAtBeginning(List *l, unsigned long long int data){
-    Node * nn = (Node *) malloc(sizeof(Node));
+void insertAtBeginning(List *l, unsigned long long int data)
+{
+    Node *nn = (Node *)malloc(sizeof(Node));
 
-    if (!nn) return;
+    if (!nn)
+        return;
 
     nn->data = data;
     nn->next = NULL;
     nn->previous = NULL;
 
-    if (!l->front) {
+    if (!l->front)
+    {
         l->front = nn;
         l->rear = nn;
     }
-    else {
+    else
+    {
         nn->next = l->front;
         l->front->previous = nn;
         l->front = nn;
@@ -58,15 +67,18 @@ void insertAtBeginning(List *l, unsigned long long int data){
     return;
 }
 
-int removeBeginning(List *l){
-    if (!l->front) return INT_MIN;
+int removeBeginning(List *l)
+{
+    if (!l->front)
+        return INT_MIN;
     Node *p = l->front;
 
     l->front = l->front->next;
-    if (!l->front){
+    if (!l->front)
+    {
         l->rear = NULL;
         return INT_MIN;
-    } 
+    }
     l->front->previous = NULL;
 
     int data = p->data;
@@ -76,7 +88,8 @@ int removeBeginning(List *l){
     return data;
 }
 
-void destroy(List *l){
+void destroy(List *l)
+{
     while (l->front)
     {
         removeBeginning(l);
@@ -86,23 +99,26 @@ void destroy(List *l){
     l->isNegative = 0;
 
     return;
-    
 }
 
-void appendDec(List *l, unsigned long long int data){
-    Node * nn = (Node *) malloc(sizeof(Node));
+void appendDec(List *l, unsigned long long int data)
+{
+    Node *nn = (Node *)malloc(sizeof(Node));
 
-    if (!nn) return;
+    if (!nn)
+        return;
 
     nn->data = data;
     nn->next = NULL;
     nn->previous = NULL;
 
-    if (!l->frontDec) {
+    if (!l->frontDec)
+    {
         l->frontDec = nn;
         l->rearDec = nn;
     }
-    else {
+    else
+    {
         nn->previous = l->rearDec;
         l->rearDec->next = nn;
         l->rearDec = nn;
@@ -111,20 +127,24 @@ void appendDec(List *l, unsigned long long int data){
     return;
 }
 
-void insertAtBeginningDec(List *l, unsigned long long int data){
-    Node * nn = (Node *) malloc(sizeof(Node));
+void insertAtBeginningDec(List *l, unsigned long long int data)
+{
+    Node *nn = (Node *)malloc(sizeof(Node));
 
-    if (!nn) return;
+    if (!nn)
+        return;
 
     nn->data = data;
     nn->next = NULL;
     nn->previous = NULL;
 
-    if (!l->frontDec) {
+    if (!l->frontDec)
+    {
         l->frontDec = nn;
         l->rearDec = nn;
     }
-    else {
+    else
+    {
         nn->next = l->frontDec;
         l->frontDec->previous = nn;
         l->frontDec = nn;
@@ -133,13 +153,16 @@ void insertAtBeginningDec(List *l, unsigned long long int data){
     return;
 }
 
-int removeEndDec(List *l){
-    if (!l->rearDec) return INT_MIN;
+int removeEndDec(List *l)
+{
+    if (!l->rearDec)
+        return INT_MIN;
     Node *p = l->rearDec;
 
     l->rearDec = l->rearDec->previous;
 
-    if (!l->rearDec){
+    if (!l->rearDec)
+    {
         l->frontDec = NULL;
         return INT_MIN;
     }
@@ -153,7 +176,8 @@ int removeEndDec(List *l){
     return data;
 }
 
-void destroyDec(List *l){
+void destroyDec(List *l)
+{
     while (l->rearDec)
     {
         removeEndDec(l);
@@ -165,15 +189,20 @@ void destroyDec(List *l){
     return;
 }
 
-void display(Number num){
+void display(Number num)
+{
 
-    if (num->isNegative) printf("-"); // Will print a negative sign if the number is negative... 
+    if (num->isNegative)
+        printf("-"); // Will print a negative sign if the number is negative...
 
-    if (!num->front){
+    if (!num->front)
+    {
         printf("0");
-    } else {
+    }
+    else
+    {
 
-        Node * p = num->front;
+        Node *p = num->front;
 
         printf("%lld", p->data); // This code will print only the first node as it is...
         p = p->next;
@@ -185,12 +214,14 @@ void display(Number num){
         }
     }
 
-    if (num->frontDec){
+    if (num->frontDec)
+    {
         printf(".");
 
-        Node * p = num->frontDec;
+        Node *p = num->frontDec;
 
-        while (p->next) {
+        while (p->next)
+        {
             printf("%09lld", p->data);
             p = p->next;
         }
@@ -199,110 +230,128 @@ void display(Number num){
 
         printf("%09lld", p->data);
 
-        while (z % 10 == 0){
+        while (z % 10 == 0)
+        {
             printf("\b");
             z /= 10;
         }
-        
-        p = p->next;
 
+        p = p->next;
     }
     printf("\n");
 
-    return;  
+    return;
 }
 
-short len(Number num){
-    if (!num->front) return 0;
+short len(Number num)
+{
+    if (!num->front)
+        return 0;
 
     short count = 0;
 
-    Node * p = num->front;
+    Node *p = num->front;
 
     while (p)
     {
         count++;
         p = p->next;
     }
-    
+
     return count;
 }
 
-short lenDec(Number num){
-    if (!num->frontDec) return 0;
+short lenDec(Number num)
+{
+    if (!num->frontDec)
+        return 0;
 
     short count = 0;
 
-    Node * p = num->frontDec;
+    Node *p = num->frontDec;
 
     while (p)
     {
         count++;
         p = p->next;
     }
-    
+
     return count;
 }
 
-short greater(Number num1, Number num2){
+short greater(Number num1, Number num2)
+{
     short len1 = len(num1), len2 = len(num2);
 
-    if (len1 > len2){
+    if (len1 > len2)
+    {
         return 1;
     }
-    else if (len2 > len1){
+    else if (len2 > len1)
+    {
         return 0;
     }
-    else {
+    else
+    {
         Node *p = num1->front, *q = num2->front;
 
-        while (p && q && p->data == q->data){
+        while (p && q && p->data == q->data)
+        {
             p = p->next;
             q = q->next;
         }
 
-        if (p && q) return (p->data > q->data)? 1 : 0 ;
+        if (p && q)
+            return (p->data > q->data) ? 1 : 0;
     }
 
     // if two numbers are exactly same before decimal point...
 
-    Node * x = num1->frontDec, * y = num2->frontDec;
+    Node *x = num1->frontDec, *y = num2->frontDec;
 
-    while (x && y && x->data == y->data){
+    while (x && y && x->data == y->data)
+    {
         x = x->next;
         y = y->next;
     }
 
-    if (x && y) return (x->data > y->data)? 1 : 0;
-    else if (x) return 1;
-    else if (y) return 0;
-    else return 1;
-
+    if (x && y)
+        return (x->data > y->data) ? 1 : 0;
+    else if (x)
+        return 1;
+    else if (y)
+        return 0;
+    else
+        return 1;
 }
 
-Number toNumber(char * str){
+Number toNumber(char *str)
+{
     int i = 0;
     char c;
     int count = strlen(str);
     int nonNumericCount = 0;
 
     int len = 0;
-    while ((c = *(str+len)) != '.' && c != '\0'){
+    while ((c = *(str + len)) != '.' && c != '\0')
+    {
         len++;
     }
-    
-    List * l = (List *)malloc(sizeof(List));
+
+    List *l = (List *)malloc(sizeof(List));
 
     init(l);
 
-    if ((c = *(str+i)) == '-'){
+    if ((c = *(str + i)) == '-')
+    {
         l->isNegative = 1;
         // *(str+i) = '\0';
         nonNumericCount++;
         i++;
     }
 
-    while ((c = *(str+i)) == ' '){
+    while ((c = *(str + i)) == ' ')
+    {
         // *(str+i) = '\0';
         nonNumericCount++;
         i++; // If the string contains spaces it will handle the spaces...
@@ -315,17 +364,18 @@ Number toNumber(char * str){
         char a[10] = "000000000"; // This will ensure that even if the loop break earlier, the correct number is read...
         for (int j = 8; j >= 0 && c != '\0' && i != (-1 + nonNumericCount); j--)
         {
-            c = *(str+i);
+            c = *(str + i);
             i--;
-            if (c == '-' || c == ' ') break;
+            if (c == '-' || c == ' ')
+                break;
             a[j] = c;
         }
 
         a[9] = '\0';
-        insertAtBeginning(l, (unsigned long long int) atoll(a));
+        insertAtBeginning(l, (unsigned long long int)atoll(a));
     }
 
-    c = *(str+len+1);
+    c = *(str + len + 1);
     i = len + 1;
 
     while (c != '\0' && i <= count - 1)
@@ -339,67 +389,80 @@ Number toNumber(char * str){
         }
 
         a[9] = '\0';
-        appendDec(l, (unsigned long long int) atoll(a));
+        appendDec(l, (unsigned long long int)atoll(a));
     }
-    
+
     return l;
 }
 
-Number add(Number num1, Number num2){
+Number add(Number num1, Number num2)
+{
 
-    if (num1->isNegative && num2->isNegative){
+    if (num1->isNegative && num2->isNegative)
+    {
         return justAdd(num1, num2, 1);
     }
-    else if (num1->isNegative){
+    else if (num1->isNegative)
+    {
         return justSubtract(num2, num1);
     }
-    else if (num2->isNegative){
+    else if (num2->isNegative)
+    {
         return justSubtract(num1, num2);
     }
-    else {
+    else
+    {
         return justAdd(num1, num2, 0);
     }
-
 }
 
-Number subtract(Number num1, Number num2){
+Number subtract(Number num1, Number num2)
+{
 
-    if (num1->isNegative && num2->isNegative){
+    if (num1->isNegative && num2->isNegative)
+    {
         return justSubtract(num2, num1);
     }
-    else if (num1->isNegative){
+    else if (num1->isNegative)
+    {
         return justAdd(num1, num2, 1);
     }
-    else if (num2->isNegative){
+    else if (num2->isNegative)
+    {
         return justAdd(num1, num2, 0);
     }
-    else {
+    else
+    {
         return justSubtract(num1, num2);
     }
-
 }
 
-Number multiply(Number num1, Number num2){
+Number multiply(Number num1, Number num2)
+{
 
-    if ((!num1->front && !num1->frontDec) || (!num2->front && !num2->frontDec)){
+    if ((!num1->front && !num1->frontDec) || (!num2->front && !num2->frontDec))
+    {
         List *l = (List *)malloc(sizeof(List));
         init(l);
         return l;
     }
 
-    if (num1->isNegative && num2->isNegative){
+    if (num1->isNegative && num2->isNegative)
+    {
         return justMultiply(num1, num2, 0);
     }
-    else if (num1->isNegative || num2->isNegative){
+    else if (num1->isNegative || num2->isNegative)
+    {
         return justMultiply(num1, num2, 1);
     }
-    else {
+    else
+    {
         return justMultiply(num1, num2, 0);
     }
-
 }
 
-Number justAdd(Number num1, Number num2, short isNegative){
+Number justAdd(Number num1, Number num2, short isNegative)
+{
     short carry = 0, carryDec = 0;
     Node *p = num1->rear, *q = num2->rear;
     Node *x = num1->frontDec, *y = num2->frontDec;
@@ -407,11 +470,13 @@ Number justAdd(Number num1, Number num2, short isNegative){
     List *l = (List *)malloc(sizeof(List));
     init(l);
 
-    if (isNegative) l->isNegative = 1;
+    if (isNegative)
+        l->isNegative = 1;
 
     // First adding digits after decimal point...
 
-    if (x && y) {
+    if (x && y)
+    {
         unsigned long long int tDec = x->data + y->data;
         appendDec(l, tDec % MAX);
         carry = tDec / MAX;
@@ -427,7 +492,8 @@ Number justAdd(Number num1, Number num2, short isNegative){
         x = x->next;
         y = y->next;
 
-        if (carryDec){
+        if (carryDec)
+        {
             l->rearDec->previous->data += 1;
         }
     }
@@ -445,9 +511,9 @@ Number justAdd(Number num1, Number num2, short isNegative){
     }
 
     // Now adding digits before decimal points...
-    
+
     while (p && q)
-    {   
+    {
         unsigned long long int t = p->data + q->data + carry;
         insertAtBeginning(l, t % MAX);
         carry = t / MAX;
@@ -469,32 +535,36 @@ Number justAdd(Number num1, Number num2, short isNegative){
         q = q->previous;
     }
 
-    if (carry){
+    if (carry)
+    {
         insertAtBeginning(l, carry);
     }
-    
-    return l;     
+
+    return l;
 }
 
-Number justSubtract(Number num1, Number num2){
+Number justSubtract(Number num1, Number num2)
+{
     int borrow = 0, borrowDec = 0;
     int xlen = 0, ylen = 0;
     Node *p, *q;
     Node *x, *y;
-    
+
     List *l = (List *)malloc(sizeof(List));
     init(l);
 
-    if (greater(num1, num2)){
+    if (greater(num1, num2))
+    {
         l->isNegative = 0;
-        p = num1->rear; 
+        p = num1->rear;
         q = num2->rear;
         x = num1->rearDec;
         xlen = lenDec(num1);
         y = num2->rearDec;
         ylen = lenDec(num2);
     }
-    else {
+    else
+    {
         l->isNegative = 1;
         p = num2->rear;
         q = num1->rear;
@@ -516,7 +586,7 @@ Number justSubtract(Number num1, Number num2){
         while (x->next && y->next)
         {
             long long int t = (long long int) x->data - y->data - ((x->next->data < y->next->data)? 1 : 0);
-            
+
             if (t < 0) t += MAX;
 
             appendDec(l,  (unsigned long long int) t % MAX);
@@ -526,7 +596,7 @@ Number justSubtract(Number num1, Number num2){
 
         if (y->next){
             long long int t = (long long int) x->data - y->data - 1;
-            
+
             if (t < 0) t += MAX;
 
             appendDec(l,  (unsigned long long int) t % MAX);
@@ -535,7 +605,7 @@ Number justSubtract(Number num1, Number num2){
         }
         else{
             long long int t = (long long int) x->data - y->data;
-            
+
             if (t < 0){
                 borrowDec = 1;
                 t += MAX;
@@ -558,7 +628,7 @@ Number justSubtract(Number num1, Number num2){
         appendDec(l, MAX - y->data - 1);
         y = y->next;
     }
-    
+
     appendDec(l, MAX - y->data);
     y = y->next;
 
@@ -581,39 +651,42 @@ Number justSubtract(Number num1, Number num2){
 
     while (x && y)
     {
-        long long int t = (long long int) x->data - y->data - borrowDec;
+        long long int t = (long long int)x->data - y->data - borrowDec;
 
-        if (t < 0){
+        if (t < 0)
+        {
             t += MAX;
             borrowDec = 1;
         }
-        else {
+        else
+        {
             borrowDec = 0;
         }
 
-        insertAtBeginningDec(l, (unsigned long long int) t % MAX);
+        insertAtBeginningDec(l, (unsigned long long int)t % MAX);
 
         x = x->previous;
         y = y->previous;
-
     }
-    
+
     borrow = borrowDec;
 
     while (p && q)
-    {   
-        long long int t = (long long int) p->data - q->data - borrow;
+    {
+        long long int t = (long long int)p->data - q->data - borrow;
 
-        if (t < 0){
+        if (t < 0)
+        {
             t += MAX;
             borrow = 1;
         }
-        else {
+        else
+        {
             borrow = 0;
         }
 
-        insertAtBeginning(l, (unsigned long long int) t % MAX);
-        
+        insertAtBeginning(l, (unsigned long long int)t % MAX);
+
         p = p->previous;
         q = q->previous;
     }
@@ -627,54 +700,60 @@ Number justSubtract(Number num1, Number num2){
 
     while (q)
     {
-        insertAtBeginning(l, - q->data - borrow);
+        insertAtBeginning(l, -q->data - borrow);
         borrow = 0;
         q = q->previous;
     }
 
     Node *r = l->front;
 
-    while (r && r->data == 0){
+    while (r && r->data == 0)
+    {
         r = r->next;
         removeBeginning(l);
     }
 
     r = l->rearDec;
 
-    while (r && r->data == 0){
+    while (r && r->data == 0)
+    {
         r = r->previous;
         removeEndDec(l);
-    } 
-    
-    return l;    
-    
+    }
+
+    return l;
 }
 
 // Changes implemented till here for new updated data structure...
 // Changes below are yet to be implemented...
 
-Number justMultiply(Number num1, Number num2, short isNegative){
+Number justMultiply(Number num1, Number num2, short isNegative)
+{
     long long int carry = 0;
     int count = 0;
     int nodesAfterDecimalInAnswer = lenDec(num1) + lenDec(num2);
     Node *p, *q;
 
     // Connecting both the lists together to multiply if it is present...
-    if (num1->frontDec){
+    if (num1->frontDec)
+    {
         num1->rear->next = num1->frontDec;
         num1->frontDec->previous = num1->rear;
         p = num1->rearDec;
     }
-    else {
+    else
+    {
         p = num1->rear;
     }
 
-    if (num2->frontDec){
+    if (num2->frontDec)
+    {
         num2->rear->next = num2->frontDec;
         num2->frontDec->previous = num2->rear;
         q = num2->rearDec;
     }
-    else {
+    else
+    {
         q = num2->rear;
     }
 
@@ -686,19 +765,22 @@ Number justMultiply(Number num1, Number num2, short isNegative){
 
     while (q)
     {
-        if (num1->frontDec) p = num1->rearDec;
-        else p = num1->rear;
+        if (num1->frontDec)
+            p = num1->rearDec;
+        else
+            p = num1->rear;
 
         while (p)
         {
             int qData = q->data;
 
-            unsigned long long int t = (unsigned long long int) p->data * qData + carry;
+            unsigned long long int t = (unsigned long long int)p->data * qData + carry;
             insertAtBeginning(temp, t % MAX);
             carry = t / MAX;
             p = p->previous;
         }
-        if (carry != 0) insertAtBeginning(temp, carry);
+        if (carry != 0)
+            insertAtBeginning(temp, carry);
 
         for (int i = 0; i < count; i++)
         {
@@ -706,7 +788,7 @@ Number justMultiply(Number num1, Number num2, short isNegative){
         }
 
         carry = 0;
-        
+
         l = add(l, temp);
 
         destroy(temp);
@@ -716,14 +798,17 @@ Number justMultiply(Number num1, Number num2, short isNegative){
         count++;
     }
 
-    if (isNegative) l->isNegative = 1;
+    if (isNegative)
+        l->isNegative = 1;
 
-    if (nodesAfterDecimalInAnswer){
+    if (nodesAfterDecimalInAnswer)
+    {
         l->rearDec = l->rear;
 
         Node *p = l->rear;
 
-        for (int i = 0; i < nodesAfterDecimalInAnswer - 1; i++){
+        for (int i = 0; i < nodesAfterDecimalInAnswer - 1; i++)
+        {
             p = p->previous;
         }
 
@@ -731,36 +816,40 @@ Number justMultiply(Number num1, Number num2, short isNegative){
         l->rear = p->previous;
 
         l->frontDec->previous = NULL;
-        l->rear->next = NULL;  
+        l->rear->next = NULL;
 
         // Resolving the side effects caused above to the num1 and num2...
 
         num1->rear->next = NULL;
-        if (num1->frontDec) num1->frontDec->previous = NULL;
-        
-        
+        if (num1->frontDec)
+            num1->frontDec->previous = NULL;
 
         num2->rear->next = NULL;
-        if(num2->frontDec) num2->frontDec->previous = NULL; 
+        if (num2->frontDec)
+            num2->frontDec->previous = NULL;
 
         Node *r = l->rearDec;
 
-        while (r && r->data == 0){
+        while (r && r->data == 0)
+        {
             r = r->previous;
             removeEndDec(l);
         }
     }
-    
-    return l;    
+
+    return l;
 }
 
-Number power(Number num1, Number num2){
-    if (len(num2) > 1){
+Number power(Number num1, Number num2)
+{
+    if (len(num2) > 1)
+    {
         printf("Warning: Exponent too long!\n");
         return toNumber("1");
     }
 
-    if (lenDec(num2) != 0){
+    if (lenDec(num2) != 0)
+    {
         printf("Warning: Ignoring the decimal part!\n");
     }
 
@@ -769,25 +858,32 @@ Number power(Number num1, Number num2){
     return powerHelper(num1, t);
 }
 
-Number powerHelper(Number num1, unsigned long long int num2){
-    if (num2 == 0){
+Number powerHelper(Number num1, unsigned long long int num2)
+{
+    if (num2 == 0)
+    {
         return toNumber("1");
     }
-    else if (num2 == 1){
+    else if (num2 == 1)
+    {
         return num1;
     }
 
-    Number temp = multiply(powerHelper(num1, num2/2), powerHelper(num1, num2/2));
+    Number temp = multiply(powerHelper(num1, num2 / 2), powerHelper(num1, num2 / 2));
 
-    if (num2 % 2 == 0) return temp;
-    else return multiply(temp, num1); 
+    if (num2 % 2 == 0)
+        return temp;
+    else
+        return multiply(temp, num1);
 }
 
-Number bitwiseLeftShift(Number num1, Number num2){
-    if (len(num2) > 1){
+Number bitwiseLeftShift(Number num1, Number num2)
+{
+    if (len(num2) > 1)
+    {
         printf("Warning: Shifting Number too long!\n");
         return toNumber("1");
     }
-    
+
     return multiply(num1, power(toNumber("2"), num2));
 }

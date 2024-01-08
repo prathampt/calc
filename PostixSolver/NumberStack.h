@@ -1,13 +1,15 @@
-#include"../number/number.c"
+#include "../number/number.c"
 
-typedef struct SLL_NodeNum{
+typedef struct SLL_NodeNum
+{
     Number num;
-    struct SLL_NodeNum * next;
-}SLL_NodeNum;
+    struct SLL_NodeNum *next;
+} SLL_NodeNum;
 
-typedef struct StackNum{
+typedef struct StackNum
+{
     SLL_NodeNum *top;
-}StackNum;
+} StackNum;
 
 void SLL_initNum(StackNum *s);
 int isEmptyNum(StackNum s);

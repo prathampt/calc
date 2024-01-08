@@ -3,21 +3,26 @@
 #include <limits.h>
 #include "characterStackUsingSLL.h"
 
-void SLL_init(Stack *s){
+void SLL_init(Stack *s)
+{
     s->top = NULL;
     return;
 }
 
-int isEmpty(Stack s){
-    if (s.top == NULL) return 1;
+int isEmpty(Stack s)
+{
+    if (s.top == NULL)
+        return 1;
 
     return 0;
 }
 
-void push(Stack *s, char data){
-    SLL_Node * nn = (SLL_Node *) malloc(sizeof(SLL_Node));
+void push(Stack *s, char data)
+{
+    SLL_Node *nn = (SLL_Node *)malloc(sizeof(SLL_Node));
 
-    if (!nn) return;
+    if (!nn)
+        return;
 
     nn->data = data;
     nn->next = NULL;
@@ -29,15 +34,17 @@ void push(Stack *s, char data){
     }
     else
     {
-        nn->next=s->top;
+        nn->next = s->top;
         s->top = nn;
     }
-    
+
     return;
 }
 
-char pop(Stack *s){
-    if (isEmpty(*s)) return CHAR_MIN;
+char pop(Stack *s)
+{
+    if (isEmpty(*s))
+        return CHAR_MIN;
 
     SLL_Node *p = s->top;
     char data = p->data;
@@ -46,22 +53,26 @@ char pop(Stack *s){
     return data;
 }
 
-char peek(Stack s){
-    if (isEmpty(s)) return CHAR_MIN;
+char peek(Stack s)
+{
+    if (isEmpty(s))
+        return CHAR_MIN;
 
     return s.top->data;
 }
 
-void SLL_display(Stack s){
-    if (isEmpty(s)) return;
+void SLL_display(Stack s)
+{
+    if (isEmpty(s))
+        return;
 
     printf("Displaying the Stack: ");
 
-    for (SLL_Node * p = s.top; p != NULL; p = p->next)
+    for (SLL_Node *p = s.top; p != NULL; p = p->next)
     {
         printf("%c | ", p->data);
     }
-    
+
     printf("\b\b   \n");
     return;
 }

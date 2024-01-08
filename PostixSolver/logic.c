@@ -32,7 +32,7 @@ Number PerfromOperation(Number num1, Number num2, char op)
 }
 Number posfixSolver(char *postStr)
 {
-    Number answer = (List* )malloc(sizeof(List));
+    Number answer = (List *)malloc(sizeof(List));
     StackNum operandStack;
     SLL_initNum(&operandStack);
     init(answer);
@@ -50,24 +50,24 @@ Number posfixSolver(char *postStr)
                 numStr = realloc(numStr, size);
             }
             numStr[j++] = postStr[i];
-            numStr[j]='\0';
-            operatorCheck=0;
+            numStr[j] = '\0';
+            operatorCheck = 0;
         }
         else if (isOperatorNum(postStr[i]))
         {
-            if (isdigit(postStr[i+1]))// if -3 Note as per our infixToPostfix function if there is some sign to number then       don't add space to detect that this sign and not operator 
+            if (isdigit(postStr[i + 1])) // if -3 Note as per our infixToPostfix function if there is some sign to number then       don't add space to detect that this sign and not operator
             {
-                numStr[j++]=postStr[i];
+                numStr[j++] = postStr[i];
                 continue;
             }
-            
+
             if (isEmptyNum(operandStack))
             {
                 printf("This is error");
                 return NULL;
             }
 
-            Number op1,op2; 
+            Number op1, op2;
             if (!operatorCheck)
             {
                 op1 = popNum(&operandStack);
@@ -92,14 +92,14 @@ Number posfixSolver(char *postStr)
         }
         else if (postStr[i] == ' ')
         {
-            if (isOperatorNum(postStr[i+1]) && postStr[i+2] == ' ' || operatorCheck)
+            if (isOperatorNum(postStr[i + 1]) && postStr[i + 2] == ' ' || operatorCheck)
             {
-                j=0;
+                j = 0;
                 continue;
             }
-            
-            numStr[j++]='\0';
-            j=0;
+
+            numStr[j++] = '\0';
+            j = 0;
             // printf("%s ",numStr);
             Number topushNum = toNumber(numStr);
             pushNum(&operandStack, topushNum);
