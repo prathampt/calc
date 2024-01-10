@@ -49,5 +49,5 @@ Number bitwiseLeftShift(Number num1, Number num2);
 Number justAdd(Number num1, Number num2, short isNegative);
 Number justSubtract(Number num1, Number num2);
 Number justMultiply(Number num1, Number num2, short isNegative);
-Number justDivide(Number num1, Number num2);
+Number justDivide(Number num1, Number num2, short int isNegative);
 Number powerHelper(Number num1, unsigned long long int num2);

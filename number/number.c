@@ -279,7 +279,7 @@ short lenDec(Number num)
     return count;
 }
 
-short greater(Number num1, Number num2)
+short greater(Number num1, Number num2) // returns 1 when num1 > num2
 {
     short len1 = len(num1), len2 = len(num2);
 
@@ -472,6 +472,10 @@ Number divide(Number num1, Number num2)
     else if (!num2->front && !num2->frontDec)
     {
         printf("Error: Cannot Divide by Zero!\n");
+        return toNumber("0");
+    }
+    else if (!greater(num1, num2))
+    {
         return toNumber("0");
     }
 
@@ -868,9 +872,47 @@ Number justMultiply(Number num1, Number num2, short isNegative)
     return l;
 }
 
-Number justDivide(Number num1, Number num2)
+Number justDivide(Number num1, Number num2, short int isNegative) // gives num1/num2
 {
-    return toNumber("0");
+    List *quotient = (List *)malloc(sizeof(List));
+    init(quotient);
+
+    Number p = num1, q, multFactor = (List *)malloc(sizeof(List));
+    init(multFactor);
+    append(multFactor, 0);
+    int len2 = len(num2);
+    while (!greater(num2, p))
+    {
+        char temp[10];
+        long long int t = (long long int)p->front->data / num2->front->data;
+        int toAddForSub = 0;
+        if (t == 0)
+        {
+            t = (unsigned long long int)(p->front->data * MAX + p->front->next->data) / num2->front->data;
+            toAddForSub += 1;
+        }
+        // sprintf(temp, "%lld", t); //gives some error!!
+        multFactor->front->data = t;
+        q = multiply(num2, multFactor);
+        while (!greater(p, q))
+        {
+            t--;
+            q = subtract(q, num2);
+        }
+        int len1 = len(p);
+        append(quotient, t);
+        for (int i = len2 + toAddForSub; i < len1; i++)
+        {
+            append(q, 0); // adding zeros to get equal size of q and p so we don't get issues in subraction
+        }
+
+        p = subtract(p, q);
+    }
+
+    if (isNegative)
+        quotient->isNegative = 1;
+
+    return quotient;
 }
 
 Number power(Number num1, Number num2)
