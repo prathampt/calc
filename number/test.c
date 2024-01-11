@@ -101,12 +101,12 @@ int main()
     // // display(e);
     // printf("                    \n");
 
-    Number a = toNumber("150");
+    Number a = toNumber("1000");
     display(a);
-    Number b = toNumber("5");
+    Number b = toNumber("2");
     display(b);
 
-    Number c = divide(a, b);
+    Number c = bitwiseRightShift(a, b);
     display(c);
 
     return 0;

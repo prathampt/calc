@@ -962,3 +962,14 @@ Number bitwiseLeftShift(Number num1, Number num2)
 
     return multiply(num1, power(toNumber("2"), num2));
 }
+
+Number bitwiseRightShift(Number num1, Number num2)
+{
+    if (len(num2) > 1)
+    {
+        printf("Warning: Shifting Number too long!\n");
+        return toNumber("1");
+    }
+
+    return divide(num1, power(toNumber("2"), num2));
+}
