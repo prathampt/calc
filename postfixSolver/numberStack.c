@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <ctype.h>
-#include "NumberStack.h"
+#include "numberStack.h"
 
 void SLL_initNum(StackNum *s)
 {

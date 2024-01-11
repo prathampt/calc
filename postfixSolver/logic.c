@@ -1,4 +1,4 @@
-#include "NumberStack.c"
+#include "numberStack.c"
 int isOperatorNum(char c)
 {
     switch (c)
