@@ -1,18 +1,27 @@
-#include "fileHandling/input.c"
+#include "postfixSolver/logic.c"
 #include "infixToPostfix/logic.c"
-#include "number/number.c"
-#include <string.h>
-int main()
+#include "fileHandling/input.c"
+
+int main(int argc, char const *argv[])
 {
     FILE *history = fopen("history.txt", "a");
-    char *str = input(history);
-    int len = strlen(str);
-    char *postfixStr = infixToPostfix(str, len);
-    for (int i = 0; i < strlen(postfixStr); i++)
-    {
-        printf("%c", postfixStr[i]);
-    }
-    printf("\n");
 
-    fclose(history);
+    printf("Binary Calculator made by Pratham and Bhavya...\n\n\n");
+
+    while (1)
+    {
+        char *str = input(history);
+
+        if (strcmp(str, "quit") == 0) break;
+
+        int len = strlen(str);
+
+        char *postfixStr = infixToPostfix(str, len);
+        printf(">>> ");
+        Number answer = posfixSolver(postfixStr);
+        display(answer);
+    }
+    
+
+    return 0;
 }

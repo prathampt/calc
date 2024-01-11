@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SIZE 50 // Do something so that you don't need to store this size initially...
+#define SIZE 50 // Just storing size 50 initially later we are going to malloc this...
 
 char *input(FILE *file)
 {

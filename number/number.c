@@ -973,3 +973,8 @@ Number bitwiseRightShift(Number num1, Number num2)
 
     return divide(num1, power(toNumber("2"), num2));
 }
+
+Number mod(Number num1, Number num2){
+    // Mod function yet to be written...
+    return toNumber("0");
+}

@@ -46,6 +46,7 @@ Number divide(Number num1, Number num2);
 Number power(Number num1, Number num2);
 Number bitwiseLeftShift(Number num1, Number num2);
 Number bitwiseRightShift(Number num1, Number num2);
+Number mod(Number num1, Number num2);
 
 Number justAdd(Number num1, Number num2, short isNegative);
 Number justSubtract(Number num1, Number num2);

@@ -16,6 +16,9 @@ int operatorPrecedence(char c)
         return 1;
     case '^':
         return 2;
+    case '>':
+    case '<':
+        return 3;
     }
 }
 
@@ -29,6 +32,8 @@ int isOperator(char c)
     case '/':
     case '^':
     case '%':
+    case '>':
+    case '<':
         return 1;
     default:
         return 0;
