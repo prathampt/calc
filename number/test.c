@@ -101,13 +101,22 @@ int main()
     // // display(e);
     // printf("                    \n");
 
-    Number a = toNumber("1000");
+    Number a = toNumber("12514541541455");
     display(a);
-    Number b = toNumber("2");
+    Number b = toNumber("72785681265");
     display(b);
+    printf(" = ");
 
-    Number c = bitwiseRightShift(a, b);
-    display(c);
+    Number d = mod(a, b);
+    display(d);
+    // printf(" * ");
+    // Number c = toNumber("-989007233");
+    // display(c);
+    // printf(" == ");
+
+    // Number e = multiply(d, c);    
+    // display(e);
+    printf("                    \n");
 
     return 0;
 }
