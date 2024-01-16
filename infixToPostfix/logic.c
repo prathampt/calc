@@ -56,12 +56,18 @@ char *infixToPostfix(char *str, int n)
             i++;
             continue;
         }
+
         if (str[i] == '+' && i == 0)
         {
             i++;
             continue;
         }
-
+        if (str[i]=='-' && i == 0)
+        {
+            answer[j++] = str[i++];
+            continue;
+        }
+        
         if (c == '(')
         {
             push(&s, c);
