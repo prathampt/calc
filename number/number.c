@@ -204,12 +204,12 @@ void display(Number num)
 
         Node *p = num->front;
 
-        printf("%lld ", p->data); // This code will print only the first node as it is...
+        printf("%lld", p->data); // This code will print only the first node as it is...
         p = p->next;
 
         while (p)
         {
-            printf("%09lld ", p->data); // All the rest nodes will be printed formatted...
+            printf("%09lld", p->data); // All the rest nodes will be printed formatted...
             p = p->next;
         }
     }
@@ -493,7 +493,8 @@ Number divide(Number num1, Number num2)
     }
 }
 
-Number justAdd(Number num1, Number num2, short isNegative)
+Number 
+justAdd(Number num1, Number num2, short isNegative)
 {
     short carry = 0, carryDec = 0;
     Node *p = num1->rear, *q = num2->rear;
