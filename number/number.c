@@ -493,7 +493,8 @@ Number divide(Number num1, Number num2)
     }
 }
 
-Number justAdd(Number num1, Number num2, short isNegative)
+Number 
+justAdd(Number num1, Number num2, short isNegative)
 {
     short carry = 0, carryDec = 0;
     Node *p = num1->rear, *q = num2->rear;
@@ -881,9 +882,9 @@ Number justDivide(Number num1, Number num2, short int isNegative) // gives num1/
     init(multFactor);
     append(multFactor, 0);
     int len2 = len(num2);
+    int lct =  len(num1) - len(num2) + 3;
     while (!greater(num2, p))
     {
-        char temp[10];
         long long int t = (long long int)p->front->data / num2->front->data;
         int toAddForSub = 0;
         if (t == 0)
@@ -891,9 +892,9 @@ Number justDivide(Number num1, Number num2, short int isNegative) // gives num1/
             t = (unsigned long long int)(p->front->data * MAX + p->front->next->data) / num2->front->data;
             toAddForSub += 1;
         }
-        // sprintf(temp, "%lld", t); //gives some error!!
         multFactor->front->data = t;
         q = multiply(num2, multFactor);
+        int lct = 0;
         while (!greater(p, q))
         {
             t--;
@@ -907,6 +908,15 @@ Number justDivide(Number num1, Number num2, short int isNegative) // gives num1/
         }
 
         p = subtract(p, q);
+        lct -= 1;
+        if (lct < -1)
+        {
+            printf("stopping the loop\n");
+            display(q);
+            display(p);
+            display(multFactor);
+            break;
+        }
     }
 
     if (isNegative)
@@ -974,7 +984,70 @@ Number bitwiseRightShift(Number num1, Number num2)
     return divide(num1, power(toNumber("2"), num2));
 }
 
-Number mod(Number num1, Number num2){
-    // Mod function yet to be written...
-    return toNumber("0");
+Number mod(Number num1, Number num2)
+{
+
+    Number multFactor = (List *)malloc(sizeof(List));
+    append(multFactor, 0);
+    int noOfZeros = len(num1);
+    Number p = num1;
+    display(num2);
+    int lct = len(num1) - len(num2) + 3;
+    while (greater(p, num2))
+    {
+        long long int t = (long long int)p->front->data / num2->front->data;
+        if (t == 0)
+        {
+            if (p->front->next == NULL)
+            {
+                break;
+            }
+            t = (unsigned long long int)(p->front->data * MAX + p->front->next->data) / num2->front->data;
+            noOfZeros -= 1;
+        }
+
+        multFactor->front->data = t;
+        Number q = multiply(num2, multFactor);
+        while (!greater(p, q) && q->isNegative == p->isNegative)
+        {
+            q = subtract(q, num2);
+            t--;
+        }
+        int len2 = len(q);
+        if (len2>len(num2))
+        {
+            noOfZeros += 1;   
+        }
+        
+        
+        for (; len2 < noOfZeros; len2++)
+        {
+            append(q, 0);
+        }
+        printf("p:");
+        display(p);
+        printf("q:");
+        display(q);
+        p = subtract(p, q);
+        noOfZeros = len(p);
+        // display(p);
+        if (lct < -1)
+        {
+            printf("stopping the loop\n");
+            printf("q:");
+            display(q);
+            printf("p:");
+            display(p);
+            printf("multFactor:");
+            display(multFactor);
+            break;
+
+        }
+        lct -= 1;
+    }
+    if (p->isNegative)
+    {
+        p = add(p, num2);
+    }
+    return p;
 }

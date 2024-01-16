@@ -32,9 +32,9 @@ Number PerfromOperation(Number num1, Number num2, char op)
         return power(num1, num2);
     case '/':
         return divide(num1, num2);
-    // case '%':
-    //     return mod(num1, num2);
-    case '>':2
+    case '%':
+        return mod(num1, num2);
+    case '>':   
         return bitwiseRightShift(num1, num2);
     case '<':
         return bitwiseLeftShift(num1, num2);
