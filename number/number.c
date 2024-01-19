@@ -493,8 +493,7 @@ Number divide(Number num1, Number num2)
     }
 }
 
-Number 
-justAdd(Number num1, Number num2, short isNegative)
+Number justAdd(Number num1, Number num2, short isNegative)
 {
     short carry = 0, carryDec = 0;
     Node *p = num1->rear, *q = num2->rear;
@@ -757,9 +756,6 @@ Number justSubtract(Number num1, Number num2)
     return l;
 }
 
-// Changes implemented till here for new updated data structure...
-// Changes below are yet to be implemented...
-
 Number justMultiply(Number num1, Number num2, short isNegative)
 {
     long long int carry = 0;
@@ -873,54 +869,63 @@ Number justMultiply(Number num1, Number num2, short isNegative)
     return l;
 }
 
-Number justDivide(Number num1, Number num2, short int isNegative) // gives num1/num2
+int quotientLen(Number num1, Number num2)
 {
-    List *quotient = (List *)malloc(sizeof(List));
-    init(quotient);
+    Node *p = num1->front, *q = num2->front;
 
-    Number p = num1, q, multFactor = (List *)malloc(sizeof(List));
-    init(multFactor);
-    append(multFactor, 0);
-    int len2 = len(num2);
-    int lct =  len(num1) - len(num2) + 3;
-    while (!greater(num2, p))
+    int ans = len(num1) - len(num2) + 1;
+
+    while (q && p->data == q->data)
     {
-        long long int t = (long long int)p->front->data / num2->front->data;
-        int toAddForSub = 0;
-        if (t == 0)
-        {
-            t = (unsigned long long int)(p->front->data * MAX + p->front->next->data) / num2->front->data;
-            toAddForSub += 1;
-        }
-        multFactor->front->data = t;
-        q = multiply(num2, multFactor);
-        int lct = 0;
-        while (!greater(p, q))
-        {
-            t--;
-            q = subtract(q, num2);
-        }
-        int len1 = len(p);
-        append(quotient, t);
-        for (int i = len2 + toAddForSub; i < len1; i++)
-        {
-            append(q, 0); // adding zeros to get equal size of q and p so we don't get issues in subraction
-        }
-
-        p = subtract(p, q);
-        lct -= 1;
-        if (lct < -1)
-        {
-            printf("stopping the loop\n");
-            display(q);
-            display(p);
-            display(multFactor);
-            break;
-        }
+        p = p->next;
+        q = q->next;
     }
 
-    if (isNegative)
-        quotient->isNegative = 1;
+    if (q->data > p->data)
+        return ans - 1;
+    return ans;
+}
+
+Number justDivide(Number num1, Number num2, short int isNegative) // gives num1/num2
+{
+    int qLen = quotientLen(num1, num2);
+
+    List *quotient = (List *)malloc(sizeof(List));
+
+    for (int i = 0; i < qLen; i++)
+    {
+        append(quotient, 0);
+    }
+
+    Node *p = quotient->front; // This is just to keep track of on which node of quotient we are doing modifications...
+
+    Number dividend = add(num1, toNumber("0"));
+
+    while (!greater(num2, dividend))
+    {
+        long long int t = (long long int)dividend->front->data / num2->front->data;
+
+        if (t == 0)
+        {
+            t = (unsigned long long int)(dividend->front->data * MAX + dividend->front->next->data) / num2->front->data;
+        }
+        // else if (t == 1)
+        // {
+        //     // To be written...
+        // }
+
+        p->data = t;
+        Number multfactor = multiply(quotient, num2);
+        
+        while (!greater(num1, multfactor)){
+            p->data -= 1;
+            multfactor = multiply(quotient, num2);
+        }
+
+        dividend = subtract(num1, multfactor);
+        p = p->next;
+        
+    }
 
     return quotient;
 }
@@ -986,68 +991,5 @@ Number bitwiseRightShift(Number num1, Number num2)
 
 Number mod(Number num1, Number num2)
 {
-
-    Number multFactor = (List *)malloc(sizeof(List));
-    append(multFactor, 0);
-    int noOfZeros = len(num1);
-    Number p = num1;
-    display(num2);
-    int lct = len(num1) - len(num2) + 3;
-    while (greater(p, num2))
-    {
-        long long int t = (long long int)p->front->data / num2->front->data;
-        if (t == 0)
-        {
-            if (p->front->next == NULL)
-            {
-                break;
-            }
-            t = (unsigned long long int)(p->front->data * MAX + p->front->next->data) / num2->front->data;
-            noOfZeros -= 1;
-        }
-
-        multFactor->front->data = t;
-        Number q = multiply(num2, multFactor);
-        while (!greater(p, q) && q->isNegative == p->isNegative)
-        {
-            q = subtract(q, num2);
-            t--;
-        }
-        int len2 = len(q);
-        if (len2>len(num2))
-        {
-            noOfZeros += 1;   
-        }
-        
-        
-        for (; len2 < noOfZeros; len2++)
-        {
-            append(q, 0);
-        }
-        printf("p:");
-        display(p);
-        printf("q:");
-        display(q);
-        p = subtract(p, q);
-        noOfZeros = len(p);
-        // display(p);
-        if (lct < -1)
-        {
-            printf("stopping the loop\n");
-            printf("q:");
-            display(q);
-            printf("p:");
-            display(p);
-            printf("multFactor:");
-            display(multFactor);
-            break;
-
-        }
-        lct -= 1;
-    }
-    if (p->isNegative)
-    {
-        p = add(p, num2);
-    }
-    return p;
+    return subtract(num1, multiply(divide(num1, num2), num2));
 }
