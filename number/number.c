@@ -909,13 +909,39 @@ Number justDivide(Number num1, Number num2, short int isNegative) // gives num1/
         {
             t = (unsigned long long int)(dividend->front->data * MAX + dividend->front->next->data) / num2->front->data;
         }
-        // else if (t == 1)
-        // {
-        //     // To be written...
-        // }
+        else if (t == 1)
+        {
+            Node * x = dividend->front;
+            Node * y = num2->front;
+
+            while (y && x->data == y->data)
+            {
+                x = x->next;
+                y = y->next;
+            }
+            
+            if (y && y->data > x->data){
+                t = MAX - 1;
+            }
+        }
 
         p->data = t;
         Number multfactor = multiply(quotient, num2);
+
+        short int lenNum1 = len(num1);
+
+        while (len(multfactor) > lenNum1){
+            p->data -= 100000;
+            multfactor = multiply(quotient, num2);
+        }
+
+        long long int z = (long long int) ((multfactor->front->data - num1->front->data) / (num2->front->data + 1));
+
+        while (z) {
+            p->data -= z;
+            multfactor = multiply(quotient, num2);
+            z = (long long int) ((multfactor->front->data - num1->front->data) / (num2->front->data + 1));
+        }
         
         while (!greater(num1, multfactor)){
             p->data -= 1;
